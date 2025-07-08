@@ -1,0 +1,658 @@
+[
+    {
+        "id": 1,
+        "description": "Directs the user to the login page to authenticate and access the application.",
+        "test_queries": [
+            "Open login page",
+            "Go to login screen",
+            "Navigate to sign-in page",
+            "Take me to login",
+            "Show login view",
+            "Direct me to authentication page",
+            "Access login section",
+            "Open sign-in screen",
+            "Navigate to login area",
+            "Go to user login"
+        ]
+    },
+    {
+        "id": 2,
+        "description": "Navigates to the main dashboard, providing an overview of key application metrics and access points.",
+        "test_queries": [
+            "Go to main dashboard",
+            "Open dashboard",
+            "Navigate to home dashboard",
+            "Show main overview",
+            "Take me to dashboard",
+            "Direct to main screen",
+            "Access dashboard view",
+            "Open main page",
+            "Navigate to overview",
+            "Go to home screen"
+        ]
+    },
+    {
+        "id": 3,
+        "description": "Takes the user to the application dashboard to view detailed application-specific data and controls.",
+        "test_queries": [
+            "Open app dashboard",
+            "Go to application dashboard",
+            "Navigate to app overview",
+            "Show app dashboard",
+            "Take me to application view",
+            "Direct to app controls",
+            "Access application dashboard",
+            "Open app data page",
+            "Navigate to app screen",
+            "Go to app metrics"
+        ]
+    },
+    {
+        "id": 4,
+        "description": "Directs to the tab list page displaying worker or event information in a tabular format.",
+        "test_queries": [
+            "Open tab list",
+            "Go to worker list",
+            "Navigate to event tabs",
+            "Show tab view",
+            "Take me to tab list",
+            "Direct to worker tabs",
+            "Access event list page",
+            "Open tabular view",
+            "Navigate to tabs",
+            "Go to worker event list"
+        ]
+    },
+    {
+        "id": 5,
+        "description": "Navigates to a detailed view of a specific worker or event, including relevant metadata.",
+        "test_queries": [
+            "Show worker details",
+            "Go to event detail",
+            "Navigate to worker info",
+            "Open event view",
+            "Take me to worker page",
+            "Direct to event details",
+            "Access worker profile",
+            "Open worker metadata",
+            "Navigate to event screen",
+            "Go to worker record"
+        ]
+    },
+    {
+        "id": 6,
+        "description": "Takes the user to the event resolution page to take actions on specific events.",
+        "test_queries": [
+            "Open event resolution",
+            "Go to resolve event",
+            "Navigate to event action",
+            "Show event fix page",
+            "Take me to event resolution",
+            "Direct to event handling",
+            "Access event action page",
+            "Open resolve screen",
+            "Navigate to event fix",
+            "Go to event solution"
+        ]
+    },
+    {
+        "id": 7,
+        "description": "Directs to the biometric snapshot list page to view biometric data records.",
+        "test_queries": [
+            "Show biometric list",
+            "Go to biometric snapshots",
+            "Navigate to biometric data",
+            "Open biometric records",
+            "Take me to biometric page",
+            "Direct to biometric view",
+            "Access biometric list",
+            "Open snapshot list",
+            "Navigate to biometrics",
+            "Go to biometric records"
+        ]
+    },
+    {
+        "id": 8,
+        "description": "Navigates to the fleet gas readings list to monitor gas-related data for fleet management.",
+        "test_queries": [
+            "Open gas readings",
+            "Go to fleet gas list",
+            "Navigate to gas data",
+            "Show fleet gas readings",
+            "Take me to gas readings",
+            "Direct to fleet gas page",
+            "Access gas readings list",
+            "Open fleet gas view",
+            "Navigate to gas records",
+            "Go to fleet gas data"
+        ]
+    },
+    {
+        "id": 9,
+        "description": "Takes the user to the user list page to view and manage user profiles.",
+        "test_queries": [
+            "Show user list",
+            "Go to users page",
+            "Navigate to user profiles",
+            "Open user management",
+            "Take me to user list",
+            "Direct to users view",
+            "Access user profiles page",
+            "Open users screen",
+            "Navigate to user records",
+            "Go to user management"
+        ]
+    },
+    {
+        "id": 10,
+        "description": "Directs to the full-page map view to visualize geographical data and locations.",
+        "test_queries": [
+            "Open map view",
+            "Go to full map",
+            "Navigate to map page",
+            "Show map screen",
+            "Take me to map",
+            "Direct to map view",
+            "Access full map page",
+            "Open location map",
+            "Navigate to geo view",
+            "Go to map display"
+        ]
+    },
+    {
+        "id": 11,
+        "description": "Navigates to the device onboarding view to register or configure new devices.",
+        "test_queries": [
+            "Open device onboarding",
+            "Go to device setup",
+            "Navigate to device registration",
+            "Show device config",
+            "Take me to device onboarding",
+            "Direct to device setup",
+            "Access device registration page",
+            "Open device config view",
+            "Navigate to device add",
+            "Go to new device screen"
+        ]
+    },
+    {
+        "id": 12,
+        "description": "Takes the user to the device model vertical page to view device model details in a structured format.",
+        "test_queries": [
+            "Show device models",
+            "Go to device model list",
+            "Navigate to model view",
+            "Open device model page",
+            "Take me to device models",
+            "Direct to model details",
+            "Access device model list",
+            "Open model vertical view",
+            "Navigate to device model",
+            "Go to model screen"
+        ]
+    },
+    {
+        "id": 13,
+        "description": "Directs to the device model detail screen to view specific device model information.",
+        "test_queries": [
+            "Show device model details",
+            "Go to model detail",
+            "Navigate to device model info",
+            "Open model detail page",
+            "Take me to model details",
+            "Direct to device model view",
+            "Access model info page",
+            "Open device model screen",
+            "Navigate to model record",
+            "Go to model info"
+        ]
+    },
+    {
+        "id": 14,
+        "description": "Navigates to the user or product listing screen to browse entities.",
+        "test_queries": [
+            "Open entity list",
+            "Go to product listing",
+            "Navigate to user listing",
+            "Show entity view",
+            "Take me to entity list",
+            "Direct to product list",
+            "Access user list page",
+            "Open entities screen",
+            "Navigate to listing view",
+            "Go to entity browse"
+        ]
+    },
+    {
+        "id": 15,
+        "description": "Takes the user to the user or product search screen to find specific entities.",
+        "test_queries": [
+            "Open entity search",
+            "Go to product search",
+            "Navigate to user search",
+            "Show search view",
+            "Take me to entity search",
+            "Direct to search page",
+            "Access search screen",
+            "Open entity find page",
+            "Navigate to search entities",
+            "Go to find entities"
+        ]
+    },
+    {
+        "id": 16,
+        "description": "Directs to the page for adding a new user to the system.",
+        "test_queries": [
+            "Open add user",
+            "Go to new user page",
+            "Navigate to user add",
+            "Show user creation",
+            "Take me to add user",
+            "Direct to user add page",
+            "Access new user screen",
+            "Open user registration",
+            "Navigate to create user",
+            "Go to user add view"
+        ]
+    },
+    {
+        "id": 17,
+        "description": "Navigates to the user preview page to review user details before saving.",
+        "test_queries": [
+            "Show user preview",
+            "Go to user review",
+            "Navigate to user preview",
+            "Open user details preview",
+            "Take me to user preview",
+            "Direct to user review page",
+            "Access user preview screen",
+            "Open user check page",
+            "Navigate to preview user",
+            "Go to user details view"
+        ]
+    },
+    {
+        "id": 18,
+        "description": "Takes the user to the user edit page to modify existing user information.",
+        "test_queries": [
+            "Open edit user",
+            "Go to user edit",
+            "Navigate to user update",
+            "Show user edit page",
+            "Take me to edit user",
+            "Direct to user modify",
+            "Access user edit screen",
+            "Open user update view",
+            "Navigate to change user",
+            "Go to user edit view"
+        ]
+    },
+    {
+        "id": 19,
+        "description": "Directs to the product add view to register a new product in the system.",
+        "test_queries": [
+            "Open add product",
+            "Go to new product",
+            "Navigate to product add",
+            "Show product creation",
+            "Take me to add product",
+            "Direct to product add page",
+            "Access new product screen",
+            "Open product registration",
+            "Navigate to create product",
+            "Go to product add view"
+        ]
+    },
+    {
+        "id": 20,
+        "description": "Navigates to the product preview view to review product details before saving.",
+        "test_queries": [
+            "Show product preview",
+            "Go to product review",
+            "Navigate to product preview",
+            "Open product details preview",
+            "Take me to product preview",
+            "Direct to product review page",
+            "Access product preview screen",
+            "Open product check page",
+            "Navigate to preview product",
+            "Go to product details view"
+        ]
+    },
+    {
+        "id": 21,
+        "description": "Takes the user to the product edit view to modify existing product information.",
+        "test_queries": [
+            "Open edit product",
+            "Go to product edit",
+            "Navigate to product update",
+            "Show product edit page",
+            "Take me to edit product",
+            "Direct to product modify",
+            "Access product edit screen",
+            "Open product update view",
+            "Navigate to change product",
+            "Go to product edit view"
+        ]
+    },
+    {
+        "id": 22,
+        "description": "Directs to the user or product filter screen to refine search results.",
+        "test_queries": [
+            "Open filter screen",
+            "Go to entity filter",
+            "Navigate to search filter",
+            "Show filter view",
+            "Take me to filter page",
+            "Direct to filter options",
+            "Access filter screen",
+            "Open refine search page",
+            "Navigate to entity filter",
+            "Go to filter results"
+        ]
+    },
+    {
+        "id": 23,
+        "description": "Navigates to the issue screen to view a list of reported tasks or issues.",
+        "test_queries": [
+            "Show task list",
+            "Go to issues page",
+            "Navigate to task view",
+            "Open issues list",
+            "Take me to task list",
+            "Direct to issues screen",
+            "Access task list page",
+            "Open reported issues",
+            "Navigate to tasks",
+            "Go to issue list"
+        ]
+    },
+    {
+        "id": 24,
+        "description": "Takes the user to the issue preview screen to view details of a specific task or issue.",
+        "test_queries": [
+            "Show issue details",
+            "Go to task preview",
+            "Navigate to issue view",
+            "Open task details",
+            "Take me to issue preview",
+            "Direct to task info",
+            "Access issue preview page",
+            "Open issue screen",
+            "Navigate to task preview",
+            "Go to issue record"
+        ]
+    },
+    {
+        "id": 25,
+        "description": "Directs to the issue add or edit screen to create or modify an issue.",
+        "test_queries": [
+            "Open new issue",
+            "Go to add issue",
+            "Navigate to issue creation",
+            "Show issue edit page",
+            "Take me to new issue",
+            "Direct to issue add",
+            "Access issue edit screen",
+            "Open create issue view",
+            "Navigate to edit issue",
+            "Go to issue update"
+        ]
+    },
+    {
+        "id": 26,
+        "description": "Navigates to the issue filter view to refine the list of tasks or issues.",
+        "test_queries": [
+            "Open task filter",
+            "Go to issue filter",
+            "Navigate to filter tasks",
+            "Show issue filter page",
+            "Take me to task filter",
+            "Direct to issue refine",
+            "Access filter issues page",
+            "Open task refine view",
+            "Navigate to issue filter",
+            "Go to filter tasks"
+        ]
+    },
+    {
+        "id": 27,
+        "description": "Takes the user to the identifiers screen to manage identifier data.",
+        "test_queries": [
+            "Show identifiers",
+            "Go to identifier page",
+            "Navigate to identifiers view",
+            "Open identifier management",
+            "Take me to identifiers",
+            "Direct to identifier screen",
+            "Access identifiers page",
+            "Open identifier list",
+            "Navigate to identifier data",
+            "Go to manage identifiers"
+        ]
+    },
+    {
+        "id": 28,
+        "description": "Directs to the identifiers complete screen to confirm identifier updates.",
+        "test_queries": [
+            "Show identifier complete",
+            "Go to identifiers done",
+            "Navigate to identifier confirmation",
+            "Open identifiers complete",
+            "Take me to identifier complete",
+            "Direct to identifiers finished",
+            "Access identifier done page",
+            "Open confirmation screen",
+            "Navigate to identifier update",
+            "Go to identifiers complete"
+        ]
+    },
+    {
+        "id": 29,
+        "description": "Navigates to the form executions listing view to select a form type for execution.",
+        "test_queries": [
+            "Open form list",
+            "Go to forms page",
+            "Navigate to form executions",
+            "Show form selection",
+            "Take me to form list",
+            "Direct to forms view",
+            "Access form execution page",
+            "Open form types",
+            "Navigate to select form",
+            "Go to form execution"
+        ]
+    },
+    {
+        "id": 30,
+        "description": "Takes the user to the questions component screen for inspections like product, worker, or area.",
+        "test_queries": [
+            "Show inspection questions",
+            "Go to questions page",
+            "Navigate to inspection view",
+            "Open questions screen",
+            "Take me to inspection questions",
+            "Direct to questions component",
+            "Access inspection page",
+            "Open question list",
+            "Navigate to questions view",
+            "Go to inspection screen"
+        ]
+    },
+    {
+        "id": 31,
+        "description": "Directs to the worker fit test and training screen for worker-related assessments.",
+        "test_queries": [
+            "Show worker fit test",
+            "Go to worker training",
+            "Navigate to fit test page",
+            "Open worker assessment",
+            "Take me to worker fit test",
+            "Direct to training screen",
+            "Access fit test view",
+            "Open worker training page",
+            "Navigate to worker test",
+            "Go to fit test screen"
+        ]
+    },
+    {
+        "id": 32,
+        "description": "Navigates to the questions screen for dynamic question rendering during inspections.",
+        "test_queries": [
+            "Open question inflater",
+            "Go to dynamic questions",
+            "Navigate to inspection questions",
+            "Show question rendering",
+            "Take me to question inflater",
+            "Direct to questions view",
+            "Access dynamic question page",
+            "Open inspection question screen",
+            "Navigate to question display",
+            "Go to question renderer"
+        ]
+    },
+    {
+        "id": 33,
+        "description": "Takes the user to the checklist complete screen to finalize checklist submissions.",
+        "test_queries": [
+            "Show checklist complete",
+            "Go to checklist done",
+            "Navigate to checklist confirmation",
+            "Open checklist final page",
+            "Take me to checklist complete",
+            "Direct to checklist finished",
+            "Access checklist done page",
+            "Open checklist submission",
+            "Navigate to checklist end",
+            "Go to checklist complete view"
+        ]
+    },
+    {
+        "id": 34,
+        "description": "Directs to the commission screen to add items to inventory.",
+        "test_queries": [
+            "Open commission screen",
+            "Go to add inventory",
+            "Navigate to commission page",
+            "Show inventory add",
+            "Take me to commission",
+            "Direct to inventory screen",
+            "Access commission view",
+            "Open add to inventory",
+            "Navigate to commission view",
+            "Go to inventory commission"
+        ]
+    },
+    {
+        "id": 35,
+        "description": "Navigates to the commission complete screen to confirm inventory additions.",
+        "test_queries": [
+            "Show commission complete",
+            "Go to inventory done",
+            "Navigate to commission confirmation",
+            "Open commission final page",
+            "Take me to commission complete",
+            "Direct to inventory finished",
+            "Access commission done page",
+            "Open inventory confirmation",
+            "Navigate to commission end",
+            "Go to commission complete view"
+        ]
+    },
+    {
+        "id": 36,
+        "description": "Takes the user to the assignment screen to manage assignments of products or workers.",
+        "test_queries": [
+            "Open assignment screen",
+            "Go to assign page",
+            "Navigate to assignment view",
+            "Show assignment management",
+            "Take me to assignment",
+            "Direct to assign screen",
+            "Access assignment page",
+            "Open assign view",
+            "Navigate to assignments",
+            "Go to manage assignments"
+        ]
+    },
+    {
+        "id": 37,
+        "description": "Directs to the assignment component for linking products to areas or workers.",
+        "test_queries": [
+            "Show assignment component",
+            "Go to link products",
+            "Navigate to assignment link",
+            "Open linking page",
+            "Take me to assignment component",
+            "Direct to product linking",
+            "Access link screen",
+            "Open assignment link view",
+            "Navigate to link workers",
+            "Go to assignment linking"
+        ]
+    },
+    {
+        "id": 38,
+        "description": "Navigates to the search worker screen for assigning workers to areas or products.",
+        "test_queries": [
+            "Open worker search",
+            "Go to find worker",
+            "Navigate to worker search page",
+            "Show worker find view",
+            "Take me to worker search",
+            "Direct to search worker",
+            "Access worker search screen",
+            "Open find worker page",
+            "Navigate to worker assign",
+            "Go to worker lookup"
+        ]
+    },
+    {
+        "id": 39,
+        "description": "Takes the user to the assignment complete screen to finalize assignments.",
+        "test_queries": [
+            "Show assignment complete",
+            "Go to assignment done",
+            "Navigate to assignment confirmation",
+            "Open assignment final page",
+            "Take me to assignment complete",
+            "Direct to assignment finished",
+            "Access assignment done page",
+            "Open assignment confirmation",
+            "Navigate to assignment end",
+            "Go to assignment complete view"
+        ]
+    },
+    {
+        "id": 40,
+        "description": "Directs to the quick scan summary screen to view scan results on the mobile app.",
+        "test_queries": [
+            "Show quick scan summary",
+            "Go to scan results",
+            "Navigate to quick scan page",
+            "Open scan summary",
+            "Take me to quick scan",
+            "Direct to scan results page",
+            "Access quick scan view",
+            "Open scan results screen",
+            "Navigate to scan summary",
+            "Go to quick scan results"
+        ]
+    },
+    {
+        "id": 41,
+        "description": "Navigates to the form list screen to view available forms for execution.",
+        "test_queries": [
+            "Open form list",
+            "Go to forms screen",
+            "Navigate to form view",
+            "Show available forms",
+            "Take me to form list",
+            "Direct to forms page",
+            "Access form list screen",
+            "Open form selection view",
+            "Navigate to forms list",
+            "Go to form execution list"
+        ]
+    }
+]
