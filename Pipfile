@@ -10,6 +10,9 @@ langchain-ollama = "*"
 fastapi = "*"
 uvicorn = "*"
 python-json-logger = "*"
+black = "*"
+chromadb = "*"
+langchain-chroma = "*"
 
 [dev-packages]
 
