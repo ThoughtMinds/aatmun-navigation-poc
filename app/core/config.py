@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import Optional
 
 
 class Settings(BaseSettings):
@@ -9,6 +10,9 @@ class Settings(BaseSettings):
     OLLAMA_BASE_URL: str = None
     OLLAMA_CHAT_MODEL: str = None
     OLLAMA_EMBEDDINGS_MODEL: str = None
+
+    PROJECT_NAME: Optional[str] = "REST API"
+    VERSION: Optional[str] = "v0.0.1"
 
 
 
