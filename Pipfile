@@ -7,6 +7,9 @@ name = "pypi"
 langchain-community = "*"
 pydantic-settings = "*"
 langchain-ollama = "*"
+fastapi = "*"
+uvicorn = "*"
+python-json-logger = "*"
 
 [dev-packages]
 
