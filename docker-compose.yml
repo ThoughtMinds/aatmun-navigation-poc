@@ -21,12 +21,12 @@ services:
 
   ollama:
     container_name: ollama
-    image: docker.io/ollama/ollama:latest
+    image: ollama/ollama:latest
     ports:
       - 11434:11434
     volumes:
       - ./data/ollama:/root/.ollama
-    pull_policy: always
+    # pull_policy: always
     tty: true
     restart: unless-stopped
     environment:
