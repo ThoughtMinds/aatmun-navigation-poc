@@ -1,6 +1,5 @@
 from sqlmodel import Field, SQLModel
 
-
 # SQLModel classes
 class Intent(SQLModel, table=True):
     intent_id: int | None = Field(default=None, primary_key=True)
