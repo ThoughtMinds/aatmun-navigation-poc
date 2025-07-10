@@ -1,15 +1,17 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app import api, db
+from app import api, db, rag
 from app.middlewares.logging_middleware import LoggingMiddleware
 from contextlib import asynccontextmanager
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Create tables if not exist
+    # Create tables if not exist and insert intent data
     db.create_db_and_tables()
+    # Create vector db
+    rag.create_vector_db()
     yield
     # Clean up 
     
