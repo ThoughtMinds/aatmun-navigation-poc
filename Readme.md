@@ -65,8 +65,8 @@ jupyter notebook
 - [x] Auto db init (if not exists) 
 - [ ] Create Ubuntu container with Newman for running API Endpoint tests
 - [ ] Better logging
-- [ ] Expose Endpoints for RAG - Insert, Update, Delete (by intent_ID)
-- [ ] Test Vector-Store Retrieval
-- [ ] Add Navigation Agent
-- [ ] Expose agent through API
-- [ ] **IMPORTANT**: Ensure saved Chroma DB is writable (should work inside container)
+- [x] Test Vector-Store Retrieval
+- [x] Add Navigation Agent
+- [x] Expose Navigation Endpoint
+    - [x] Query navigation
+    - [ ] Add, Update, Delete Navigation Intents
