@@ -27,13 +27,15 @@ def get_vector_db() -> Chroma:
 def create_vector_db() -> None:
     """Create Chroma database if not exists"""
     try:
-        vector_db = Chroma(
+        vectorstore = Chroma(
             persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
             embedding_function=embeddings,
             collection_name="Navigation_Collection"
         )
-        print("Chroma database already exists")
+        assert len(vectorstore.get()['documents']) != 0
+        print(f"Chroma database loaded from {settings.CHROMA_PERSIST_DIRECTORY}")
     except Exception as e:
+        print(f"Could not load Chroma database from {{settings.CHROMA_PERSIST_DIRECTORY}}")
         print("Creating Chroma database")
         session = Session(db.engine)
         navigation_data = api.read_intents(session=session)
@@ -43,11 +45,11 @@ def create_vector_db() -> None:
             navigation_data = api.read_intents(session=session)
         print("Reading Navigation Intents from Database")
         documents = get_documents(navigation_intents=navigation_data)
-        Chroma.from_documents(
+        vectorstore = Chroma.from_documents(
             documents=documents,
             embedding=embeddings,
             persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
             collection_name="Navigation_Collection"
         )
-        print("Embedded Intents to Chroma")
+        print(f"Added {len(vectorstore.get()['documents'])} Intents to Chroma")
         print(f"Saved Chroma database at {settings.CHROMA_PERSIST_DIRECTORY}")
