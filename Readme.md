@@ -61,5 +61,11 @@ jupyter notebook
 
 ## To-Do:
 
-* Expose endpoints for sqlite
-* Auto db init (if not exists)
+* Expose endpoints for sqlite (WIP)
+* Auto db init (if not exists) (Almost done)
+* Create ubuntu container with Newman for running API Endpoint tests
+* Better logging
+* Endpoints for RAG - Insert, Update, Delete (by metadata ID)
+* Add Navigation Agent 
+* Expose agent through API
+* IMPORTANT: Ensure saved Chroma DB is writable!!
