@@ -96,19 +96,22 @@ def read_intent(intent_id: int, session: SessionDep):
 def read_intents(
     session: SessionDep,
     offset: int = 0,
-    limit: Annotated[int, Query(le=100)] = 100,
+    limit: Annotated[Optional[int], Query(le=100)] = None,
 ):
     """Retrieve a paginated list of all intents with their parameters, required parameters, and responses.
 
     Args:
         session (SessionDep): The database session dependency.
         offset (int, optional): The number of records to skip for pagination. Defaults to 0.
-        limit (int, optional): The maximum number of records to return. Defaults to 100, max 100.
+        limit (Optional[int], optional): The maximum number of records to return. Defaults to None (fetch all), max 100.
 
     Returns:
         List[schema.IntentResponse]: A list of intents, each including ID, name, description, parameters, required parameters, and responses.
     """
-    intents = session.exec(select(db.Intent).offset(offset).limit(limit)).all()
+    query = select(db.Intent).offset(offset)
+    if limit is not None:
+        query = query.limit(limit)
+    intents = session.exec(query).all()
     result = []
     for intent in intents:
         parameters = session.exec(
