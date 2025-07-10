@@ -19,7 +19,7 @@ server.add_middleware(
 # Logging Middleware
 server.add_middleware(LoggingMiddleware)
 
-# server.include_router(api_router, prefix="/api")
+server.include_router(api.api_router, prefix="/api")
 
 @server.get("/")
 def index():
