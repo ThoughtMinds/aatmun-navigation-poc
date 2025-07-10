@@ -1,4 +1,4 @@
-from typing import Annotated, List
+from typing import Annotated, List, Optional
 from fastapi import Depends, APIRouter, HTTPException, Query
 from sqlmodel import Session, select
 from app import db, schema
