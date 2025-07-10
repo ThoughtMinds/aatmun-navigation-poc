@@ -45,7 +45,7 @@ ollama
 ```
 ## Development
 
-All R&D steps have been documented as jupter [notebooks](./notebooks/). They can be explored by installing `jupter`
+All R&D has been documented as jupter [notebooks](./notebooks/). They can be explored by installing `jupter`
 
 ```bash
 pip install jupyter
@@ -57,15 +57,16 @@ and running:
 jupyter notebook
 ```
 
-## Running
-
 ## To-Do:
 
-* Expose endpoints for sqlite (WIP)
-* Auto db init (if not exists) (Almost done)
-* Create ubuntu container with Newman for running API Endpoint tests
-* Better logging
-* Endpoints for RAG - Insert, Update, Delete (by metadata ID)
-* Add Navigation Agent 
-* Expose agent through API
-* IMPORTANT: Ensure saved Chroma DB is writable!!
+# Project Checklist
+
+- [x] Expose endpoints for SQLite
+- [x] Auto db init (if not exists) 
+- [ ] Create Ubuntu container with Newman for running API Endpoint tests
+- [ ] Better logging
+- [ ] Expose Endpoints for RAG - Insert, Update, Delete (by intent_ID)
+- [ ] Test Vector-Store Retrieval
+- [ ] Add Navigation Agent
+- [ ] Expose agent through API
+- [ ] **IMPORTANT**: Ensure saved Chroma DB is writable (should work inside container)
