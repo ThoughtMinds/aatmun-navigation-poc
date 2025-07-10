@@ -1,1 +1,1 @@
-from .navigation import insert_example_intents, read_intents
+from .database import insert_example_intents, read_intents
