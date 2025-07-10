@@ -1,11 +1,20 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.api import api_router
+from app import api, db
 from app.middlewares.logging_middleware import LoggingMiddleware
+from contextlib import asynccontextmanager
 
 
-server = FastAPI(title=settings.PROJECT_NAME, version=settings.VERSION)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Create tables if not exist
+    db.create_db_and_tables()
+    yield
+    # Clean up 
+    
+    
+server = FastAPI(title=settings.PROJECT_NAME, version=settings.VERSION, lifespan=lifespan)
 
 server.add_middleware(
     CORSMiddleware,
