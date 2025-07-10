@@ -10,7 +10,7 @@ from app import api
 embeddings = llm.get_ollama_embeddings_model()
 
 
-def get_vector_db() -> Chroma:
+def get_vectorstore() -> Chroma:
     """Loads Chroma database
 
     Returns:
@@ -19,12 +19,12 @@ def get_vector_db() -> Chroma:
     vectordb = Chroma(
         persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
         embedding_function=embeddings,
+        collection_name="Navigation_Collection"
     )
-    print(f"Loaded Chroma database from {settings.CHROMA_PERSIST_DIRECTORY}")
     return vectordb
 
 
-def create_vector_db() -> None:
+def create_vectorstore() -> None:
     """Create Chroma database if not exists"""
     try:
         vectorstore = Chroma(
@@ -32,7 +32,6 @@ def create_vector_db() -> None:
             embedding_function=embeddings,
             collection_name="Navigation_Collection"
         )
-        assert len(vectorstore.get()['documents']) != 0
         print(f"Chroma database loaded from {settings.CHROMA_PERSIST_DIRECTORY}")
     except Exception as e:
         print(f"Could not load Chroma database from {{settings.CHROMA_PERSIST_DIRECTORY}}")

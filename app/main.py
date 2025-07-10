@@ -11,7 +11,7 @@ async def lifespan(app: FastAPI):
     # Create tables if not exist and insert intent data
     db.create_db_and_tables()
     # Create vector db
-    rag.create_vector_db()
+    rag.create_vectorstore()
     yield
     # Clean up 
     
