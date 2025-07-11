@@ -39,6 +39,9 @@ dev:
 	$(DOCKER_COMPOSE) -f $(DEV_COMPOSE_FILE) build --parallel && \
 	$(DOCKER_COMPOSE) -f $(DEV_COMPOSE_FILE) up --remove-orphans
 
+model:
+	docker exec -it ollama /bin/bash ./entrypoint.sh
+
 # Standard Docker Compose commands
 up:
 	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) up -d
