@@ -17,6 +17,7 @@ langgraph = "*"
 
 [dev-packages]
 black = "*"
+ipykernel = "*"
 jupyter = "*"
 
 [requires]
