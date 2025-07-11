@@ -1,6 +1,6 @@
 from typing import Annotated, List, Optional
 from fastapi import Depends, APIRouter, HTTPException, Query
-from sqlmodel import Session, select
+from sqlmodel import Session, select, delete
 from app import db, schema
 from json import load
 
@@ -156,10 +156,12 @@ def delete_intent(intent_id: int, session: SessionDep):
     intent = session.get(db.Intent, intent_id)
     if not intent:
         raise HTTPException(status_code=404, detail="Intent not found")
+
+    # TODO: Check for better way of deleting items
     
-    session.exec(select(db.Parameter).where(db.Parameter.intent_id == intent_id)).delete()
-    session.exec(select(db.RequiredParameter).where(db.RequiredParameter.intent_id == intent_id)).delete()
-    session.exec(select(db.Response).where(db.Response.intent_id == intent_id)).delete()
+    session.exec(delete(db.Parameter).where(db.Parameter.intent_id == intent_id))
+    session.exec(delete(db.RequiredParameter).where(db.RequiredParameter.intent_id == intent_id))
+    session.exec(delete(db.Response).where(db.Response.intent_id == intent_id))
     
     session.delete(intent)
     session.commit()
