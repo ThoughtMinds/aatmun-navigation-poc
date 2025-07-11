@@ -32,9 +32,10 @@ def create_vectorstore() -> None:
             embedding_function=embeddings,
             collection_name="Navigation_Collection"
         )
+        assert len(vectorstore.get()['documents']) != 0
         print(f"Chroma database loaded from {settings.CHROMA_PERSIST_DIRECTORY}")
     except Exception as e:
-        print(f"Could not load Chroma database from {{settings.CHROMA_PERSIST_DIRECTORY}}")
+        print(f"Could not load Chroma database from {{settings.CHROMA_PERSIST_DIRECTORY}} due to: {e}")
         print("Creating Chroma database")
         session = Session(db.engine)
         navigation_data = api.read_intents(session=session)
