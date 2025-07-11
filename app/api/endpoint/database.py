@@ -1,4 +1,4 @@
-from typing import Annotated, List, Optional
+from typing import Annotated, Dict, List, Optional
 from fastapi import Depends, APIRouter, HTTPException, Query
 from sqlmodel import Session, select, delete
 from app import db, schema
@@ -9,7 +9,7 @@ router = APIRouter()
 SessionDep = Annotated[Session, Depends(db.get_session)]
 
 @router.post("/intents/", response_model=schema.IntentResponse)
-def create_intent(intent: schema.IntentCreate, session: SessionDep):
+def create_intent(intent: schema.IntentCreate, session: SessionDep) -> schema.IntentResponse:
     """Create a new intent with associated parameters, required parameters, and responses.
 
     Args:
@@ -51,7 +51,7 @@ def create_intent(intent: schema.IntentCreate, session: SessionDep):
     )
 
 @router.get("/intents/{intent_id}", response_model=schema.IntentResponse)
-def read_intent(intent_id: int, session: SessionDep):
+def read_intent(intent_id: int, session: SessionDep) -> schema.IntentResponse:
     """Retrieve an intent by its ID, including its parameters, required parameters, and responses.
 
     Args:
@@ -97,7 +97,7 @@ def read_intents(
     session: SessionDep,
     offset: int = 0,
     limit: Annotated[Optional[int], Query(le=100)] = None,
-):
+) -> List[schema.IntentResponse]:
     """Retrieve a paginated list of all intents with their parameters, required parameters, and responses.
 
     Args:
@@ -140,7 +140,7 @@ def read_intents(
     return result
 
 @router.delete("/intents/{intent_id}")
-def delete_intent(intent_id: int, session: SessionDep):
+def delete_intent(intent_id: int, session: SessionDep) -> Dict[str, bool]:
     """Delete an intent by its ID, including its associated parameters, required parameters, and responses.
 
     Args:
@@ -168,7 +168,7 @@ def delete_intent(intent_id: int, session: SessionDep):
     return {"ok": True}
 
 @router.post("/intents/insert_example_intents")
-def insert_example_intents(session: SessionDep):
+def insert_example_intents(session: SessionDep) -> Dict:
     """Insert sample intent data into the database for testing purposes.
 
     Args:
