@@ -85,6 +85,15 @@ jupyter notebook
 - [ ] Better logging
 - [x] Test Vector-Store Retrieval
 - [x] Add Navigation Agent
+- [x] Create Frontend
+    - [x] Database
+        - [x] View
+        - [x] Delete
+        - [ ] Update
+    - [x] Navigation
+        - [ ] Get Navigation
+        - [ ] Run tests (excel file input)
+    
 - [x] Expose Navigation Endpoint
     - [x] Query navigation
     - [ ] Add, Update, Delete Navigation Intents
