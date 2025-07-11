@@ -49,6 +49,15 @@ docker ps --format '{{.Names}}'
 aatmun-api
 ollama
 ```
+
+### Test
+
+You can run tests using `newman`
+
+```bash
+make tests
+```
+
 ## Development
 
 All R&D has been documented as jupter [notebooks](./notebooks/). They can be explored by installing `jupter`
@@ -69,9 +78,10 @@ jupyter notebook
 
 - [x] Expose endpoints for SQLite
 - [ ] Add Username/Password OAuth
+- [ ] Ensure sqlite updations are reflected in chroma
 - [x] Auto db init (if not exists) 
 - [x] Command to pull Ollama models
-- [ ] Create Ubuntu container with Newman for running API Endpoint tests
+- [X] Use Newman for running tests
 - [ ] Better logging
 - [x] Test Vector-Store Retrieval
 - [x] Add Navigation Agent

@@ -28,6 +28,7 @@ help:
 	@echo "  make logs [env=dev|prod]     - View logs from services (default: dev)"
 	@echo "  make init                    - Pulls models inside the Ollama container"
 	@echo "  make dev                     - Run development environment with logs"
+	@echo "  make test                    - Test API endpoints using NewMan"
 	@echo ""
 	@echo "Examples:"
 	@echo "  make up env=dev     - Use development compose file"
@@ -43,6 +44,9 @@ init:
 	$(DOCKER_COMPOSE) -f $(DEV_COMPOSE_FILE) up -d ollama
 	docker exec -it ollama /bin/bash ./entrypoint.sh
 	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) down ollama
+
+test:
+	docker run --rm -v ./static/tests:/etc/newman --network aatmun-navigation-poc_aatmun -t postman/newman run aatmun_api_collection
 
 # Standard Docker Compose commands
 up:
