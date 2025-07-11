@@ -4,16 +4,20 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-langchain-community = "*"
 pydantic-settings = "*"
-langchain-ollama = "*"
 fastapi = "*"
 uvicorn = "*"
+langchain = "*"
+langchain-core = "*"
+langchain-community = "*"
+langgraph = "*"
+ollama = "*"
+langchain-ollama = "*"
 python-json-logger = "*"
 chromadb = "*"
 langchain-chroma = "*"
 sqlmodel = "*"
-langgraph = "*"
+pandas = "*"
 
 [dev-packages]
 black = "*"
@@ -21,5 +25,5 @@ ipykernel = "*"
 jupyter = "*"
 
 [requires]
-python_version = "3.10"
-python_full_version = "3.10.5"
+python_version = "3.11"
+python_full_version = "3.11.5"
