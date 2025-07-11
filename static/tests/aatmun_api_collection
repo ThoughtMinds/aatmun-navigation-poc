@@ -1,0 +1,651 @@
+{
+	"info": {
+		"_postman_id": "b365c276-c715-4a64-a275-ab9195de0559",
+		"name": "API Modules",
+		"description": "## API Endpoints:\n\n1. Database\n    \n2. Navigation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "11946508",
+		"_collection_link": "https://insertcheesyline.postman.co/workspace/Aatmun-PoC~c32a6ddc-233f-47df-8fd5-9b254af95109/collection/11946508-b365c276-c715-4a64-a275-ab9195de0559?action=share&source=collection_link&creator=11946508"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "Index",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if key exists\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData).to.have.keys(['version'])\r",
+									"});\r",
+									"\r",
+									"pm.execution.setNextRequest(\"List Intents\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}"
+					},
+					"response": [
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{baseUrl}}"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "date",
+									"value": "Fri, 11 Jul 2025 07:54:52 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "content-length",
+									"value": "20"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"version\": \"v0.0.1\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Database",
+			"item": [
+				{
+					"name": "List Intents",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code 200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Parse JSON safely\r",
+									"let responseData;\r",
+									"try {\r",
+									"    responseData = pm.response.json();\r",
+									"} catch (e) {\r",
+									"    pm.test(\"Response is valid JSON\", function () {\r",
+									"        pm.expect(e).to.be.null;\r",
+									"    });\r",
+									"    throw new Error(\"Response is not valid JSON\");\r",
+									"}\r",
+									"\r",
+									"// Test if response is an array\r",
+									"pm.test(\"Response is an array\", function () {\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"// Test each item in the array for required keys and types\r",
+									"pm.test(\"Check if each item has required keys and types\", function () {\r",
+									"    responseData.forEach(item => {\r",
+									"        // Check required keys\r",
+									"        pm.expect(item).to.include.keys('intent_id', 'intent', 'description', 'parameters', 'required', 'responses');\r",
+									"        \r",
+									"        // Validate types\r",
+									"        pm.expect(item.intent_id).to.be.a('number');\r",
+									"        pm.expect(item.intent).to.be.a('string');\r",
+									"        pm.expect(item.description).to.be.a('string');\r",
+									"        pm.expect(item.parameters).to.be.an('object');\r",
+									"        pm.expect(item.required).to.be.an('array');\r",
+									"        pm.expect(item.responses).to.be.an('object');\r",
+									"        \r",
+									"        // Validate parameters object\r",
+									"        \r",
+									"        // Validate required array\r",
+									"        \r",
+									"        // Validate responses object\r",
+									"        pm.expect(item.responses).to.include.keys('web', 'android', 'ios');\r",
+									"        pm.expect(item.responses.web).to.be.a('string');\r",
+									"        pm.expect(item.responses.android).to.be.a('string');\r",
+									"        pm.expect(item.responses.ios).to.be.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"// Store first intent_id as environment variable if tests pass\r",
+									"pm.test(\"Store first intent_id\", function () {\r",
+									"    if (responseData.length > 0) {\r",
+									"        pm.collectionVariables.set(\"intent_id\", responseData[0].intent_id);\r",
+									"    } else {\r",
+									"        pm.expect.fail(\"No intents found in response\");\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.execution.setNextRequest(\"Get Intent By ID\");\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/api/database/intents"
+					},
+					"response": [
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{baseUrl}}/api/database/intents"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "date",
+									"value": "Fri, 11 Jul 2025 08:04:33 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "content-length",
+									"value": "13946"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"intent_id\": 1,\n        \"intent\": \"navigate_to_login_page\",\n        \"description\": \"Directs the user to the login page to authenticate and access the application.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/login_page\",\n            \"android\": \"ActivityLogin\",\n            \"ios\": \"ActivityLogin\"\n        }\n    },\n    {\n        \"intent_id\": 2,\n        \"intent\": \"navigate_to_main_dashboard\",\n        \"description\": \"Navigates to the main dashboard, providing an overview of key application metrics and access points.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/main_dashboard\",\n            \"android\": \"MenuMainActivity\",\n            \"ios\": \"MenuMainActivity\"\n        }\n    },\n    {\n        \"intent_id\": 3,\n        \"intent\": \"navigate_to_application_dashboard\",\n        \"description\": \"Takes the user to the application dashboard to view detailed application-specific data and controls.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/application_dashboard_view\",\n            \"android\": \"ActivityApplicationDashboard\",\n            \"ios\": \"ActivityApplicationDashboard\"\n        }\n    },\n    {\n        \"intent_id\": 4,\n        \"intent\": \"navigate_to_tab_list\",\n        \"description\": \"Directs to the tab list page displaying worker or event information in a tabular format.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/tab_list_page\",\n            \"android\": \"ActivityTabList\",\n            \"ios\": \"ActivityTabList\"\n        }\n    },\n    {\n        \"intent_id\": 5,\n        \"intent\": \"navigate_to_worker_event_detail\",\n        \"description\": \"Navigates to a detailed view of a specific worker or event, including relevant metadata.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/page_layout_template\",\n            \"android\": \"ActivityWorkerEventDetail\",\n            \"ios\": \"ActivityWorkerEventDetail\"\n        }\n    },\n    {\n        \"intent_id\": 6,\n        \"intent\": \"navigate_to_resolve_event\",\n        \"description\": \"Takes the user to the event resolution page to take actions on specific events.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/events_action_bottom_bar\",\n            \"android\": \"ActivityResolveEvent\",\n            \"ios\": \"ActivityResolveEvent\"\n        }\n    },\n    {\n        \"intent_id\": 7,\n        \"intent\": \"navigate_to_biometric_snapshot\",\n        \"description\": \"Directs to the biometric snapshot list page to view biometric data records.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/biometric_snapshot_list\",\n            \"android\": \"ActivityBiometricSnapshot\",\n            \"ios\": \"ActivityBiometricSnapshot\"\n        }\n    },\n    {\n        \"intent_id\": 8,\n        \"intent\": \"navigate_to_fleet_gas_readings\",\n        \"description\": \"Navigates to the fleet gas readings list to monitor gas-related data for fleet management.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/fleet_gas_readings_list\",\n            \"android\": \"ActivityFleetGasReadings\",\n            \"ios\": \"ActivityFleetGasReadings\"\n        }\n    },\n    {\n        \"intent_id\": 9,\n        \"intent\": \"navigate_to_user_list\",\n        \"description\": \"Takes the user to the user list page to view and manage user profiles.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/user_list_page\",\n            \"android\": \"ActivityUserList\",\n            \"ios\": \"ActivityUserList\"\n        }\n    },\n    {\n        \"intent_id\": 10,\n        \"intent\": \"navigate_to_map_view\",\n        \"description\": \"Directs to the full-page map view to visualize geographical data and locations.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/full_page_map_view\",\n            \"android\": \"ActivityMapView\",\n            \"ios\": \"ActivityMapView\"\n        }\n    },\n    {\n        \"intent_id\": 11,\n        \"intent\": \"navigate_to_device_onboarding\",\n        \"description\": \"Navigates to the device onboarding view to register or configure new devices.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/device_onboarding_view\",\n            \"android\": \"ActivityDeviceOnboarding\",\n            \"ios\": \"ActivityDeviceOnboarding\"\n        }\n    },\n    {\n        \"intent_id\": 12,\n        \"intent\": \"navigate_to_device_model_vertical\",\n        \"description\": \"Takes the user to the device model vertical page to view device model details in a structured format.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/device_model_vertical_view\",\n            \"android\": \"ActivityDeviceModelVertical\",\n            \"ios\": \"ActivityDeviceModelVertical\"\n        }\n    },\n    {\n        \"intent_id\": 13,\n        \"intent\": \"navigate_to_device_model_detail\",\n        \"description\": \"Directs to the device model detail screen to view specific device model information.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/device_model_detail_view\",\n            \"android\": \"ActivityDeviceModelDetail\",\n            \"ios\": \"ActivityDeviceModelDetail\"\n        }\n    },\n    {\n        \"intent_id\": 14,\n        \"intent\": \"navigate_to_entity_listing\",\n        \"description\": \"Navigates to the user or product listing screen to browse entities.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/entity_listing_view\",\n            \"android\": \"ActivityEntityListing\",\n            \"ios\": \"ActivityEntityListing\"\n        }\n    },\n    {\n        \"intent_id\": 15,\n        \"intent\": \"navigate_to_entity_search\",\n        \"description\": \"Takes the user to the user or product search screen to find specific entities.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/entity_search_view\",\n            \"android\": \"ActivityEntitySearch\",\n            \"ios\": \"ActivityEntitySearch\"\n        }\n    },\n    {\n        \"intent_id\": 16,\n        \"intent\": \"navigate_to_user_add\",\n        \"description\": \"Directs to the page for adding a new user to the system.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/user_add_view\",\n            \"android\": \"ActivityUserAdd\",\n            \"ios\": \"ActivityUserAdd\"\n        }\n    },\n    {\n        \"intent_id\": 17,\n        \"intent\": \"navigate_to_user_preview\",\n        \"description\": \"Navigates to the user preview page to review user details before saving.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/user_preview_view\",\n            \"android\": \"ActivityUserPreview\",\n            \"ios\": \"ActivityUserPreview\"\n        }\n    },\n    {\n        \"intent_id\": 18,\n        \"intent\": \"navigate_to_user_edit\",\n        \"description\": \"Takes the user to the user edit page to modify existing user information.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/user_edit_view\",\n            \"android\": \"ActivityUserEdit\",\n            \"ios\": \"ActivityUserEdit\"\n        }\n    },\n    {\n        \"intent_id\": 19,\n        \"intent\": \"navigate_to_product_add\",\n        \"description\": \"Directs to the product add view to register a new product in the system.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/product_add_view\",\n            \"android\": \"ActivityProductAdd\",\n            \"ios\": \"ActivityProductAdd\"\n        }\n    },\n    {\n        \"intent_id\": 20,\n        \"intent\": \"navigate_to_product_preview\",\n        \"description\": \"Navigates to the product preview view to review product details before saving.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/product_preview_view\",\n            \"android\": \"ActivityProductPreview\",\n            \"ios\": \"ActivityProductPreview\"\n        }\n    },\n    {\n        \"intent_id\": 21,\n        \"intent\": \"navigate_to_product_edit\",\n        \"description\": \"Takes the user to the product edit view to modify existing product information.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/product_edit_view\",\n            \"android\": \"ActivityProductEdit\",\n            \"ios\": \"ActivityProductEdit\"\n        }\n    },\n    {\n        \"intent_id\": 22,\n        \"intent\": \"navigate_to_entity_filter\",\n        \"description\": \"Directs to the user or product filter screen to refine search results.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/entity_filter_view\",\n            \"android\": \"ActivityEntityFilter\",\n            \"ios\": \"ActivityEntityFilter\"\n        }\n    },\n    {\n        \"intent_id\": 23,\n        \"intent\": \"navigate_to_tasks_list\",\n        \"description\": \"Navigates to the issue screen to view a list of reported tasks or issues.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/tasks_list\",\n            \"android\": \"ActivityTasksList\",\n            \"ios\": \"ActivityTasksList\"\n        }\n    },\n    {\n        \"intent_id\": 24,\n        \"intent\": \"navigate_to_task_preview\",\n        \"description\": \"Takes the user to the issue preview screen to view details of a specific task or issue.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/task_preview_screen\",\n            \"android\": \"ActivityTaskPreview\",\n            \"ios\": \"ActivityTaskPreview\"\n        }\n    },\n    {\n        \"intent_id\": 25,\n        \"intent\": \"navigate_to_new_issue\",\n        \"description\": \"Directs to the issue add or edit screen to create or modify an issue.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/new_issue_screen\",\n            \"android\": \"ActivityNewIssue\",\n            \"ios\": \"ActivityNewIssue\"\n        }\n    },\n    {\n        \"intent_id\": 26,\n        \"intent\": \"navigate_to_task_filter\",\n        \"description\": \"Navigates to the issue filter view to refine the list of tasks or issues.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/task_filter_view\",\n            \"android\": \"ActivityTaskFilter\",\n            \"ios\": \"ActivityTaskFilter\"\n        }\n    },\n    {\n        \"intent_id\": 27,\n        \"intent\": \"navigate_to_identifiers\",\n        \"description\": \"Takes the user to the identifiers screen to manage identifier data.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/identifiers\",\n            \"android\": \"ActivityIdentifiers\",\n            \"ios\": \"ActivityIdentifiers\"\n        }\n    },\n    {\n        \"intent_id\": 28,\n        \"intent\": \"navigate_to_identifiers_complete\",\n        \"description\": \"Directs to the identifiers complete screen to confirm identifier updates.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/identifiers_update_complete_screen\",\n            \"android\": \"ActivityIdentifiersComplete\",\n            \"ios\": \"ActivityIdentifiersComplete\"\n        }\n    },\n    {\n        \"intent_id\": 29,\n        \"intent\": \"navigate_to_form_executions\",\n        \"description\": \"Navigates to the form executions listing view to select a form type for execution.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/form_executions_listing_view\",\n            \"android\": \"ActivityFormExecutions\",\n            \"ios\": \"ActivityFormExecutions\"\n        }\n    },\n    {\n        \"intent_id\": 30,\n        \"intent\": \"navigate_to_questions_component\",\n        \"description\": \"Takes the user to the questions component screen for inspections like product, worker, or area.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/questions_component\",\n            \"android\": \"ActivityQuestionsComponent\",\n            \"ios\": \"ActivityQuestionsComponent\"\n        }\n    },\n    {\n        \"intent_id\": 31,\n        \"intent\": \"navigate_to_worker_fit_test\",\n        \"description\": \"Directs to the worker fit test and training screen for worker-related assessments.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/worker_fit_test_view\",\n            \"android\": \"ActivityWorkerFitTest\",\n            \"ios\": \"ActivityWorkerFitTest\"\n        }\n    },\n    {\n        \"intent_id\": 32,\n        \"intent\": \"navigate_to_question_inflater\",\n        \"description\": \"Navigates to the questions screen for dynamic question rendering during inspections.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/question_inflater\",\n            \"android\": \"ActivityQuestionInflater\",\n            \"ios\": \"ActivityQuestionInflater\"\n        }\n    },\n    {\n        \"intent_id\": 33,\n        \"intent\": \"navigate_to_checklist_complete\",\n        \"description\": \"Takes the user to the checklist complete screen to finalize checklist submissions.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/checklist_complete_screen\",\n            \"android\": \"ActivityChecklistComplete\",\n            \"ios\": \"ActivityChecklistComplete\"\n        }\n    },\n    {\n        \"intent_id\": 34,\n        \"intent\": \"navigate_to_commission_screen\",\n        \"description\": \"Directs to the commission screen to add items to inventory.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/commission_screen\",\n            \"android\": \"ActivityPPECommission\",\n            \"ios\": \"Commission\"\n        }\n    },\n    {\n        \"intent_id\": 35,\n        \"intent\": \"navigate_to_commission_complete\",\n        \"description\": \"Navigates to the commission complete screen to confirm inventory additions.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/commission_complete_screen\",\n            \"android\": \"ActivityCommissionComplete\",\n            \"ios\": \"ActivityCommissionComplete\"\n        }\n    },\n    {\n        \"intent_id\": 36,\n        \"intent\": \"navigate_to_assign_screen\",\n        \"description\": \"Takes the user to the assignment screen to manage assignments of products or workers.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/assign_screen\",\n            \"android\": \"ActivityAssign\",\n            \"ios\": \"ActivityAssign\"\n        }\n    },\n    {\n        \"intent_id\": 37,\n        \"intent\": \"navigate_to_assignment_component\",\n        \"description\": \"Directs to the assignment component for linking products to areas or workers.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/assignment_component\",\n            \"android\": \"ActivityAssignmentComponent\",\n            \"ios\": \"ActivityAssignmentComponent\"\n        }\n    },\n    {\n        \"intent_id\": 38,\n        \"intent\": \"navigate_to_search_worker\",\n        \"description\": \"Navigates to the search worker screen for assigning workers to areas or products.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/search_worker_screen\",\n            \"android\": \"ActivitySearchWorker\",\n            \"ios\": \"ActivitySearchWorker\"\n        }\n    },\n    {\n        \"intent_id\": 39,\n        \"intent\": \"navigate_to_assignment_complete\",\n        \"description\": \"Takes the user to the assignment complete screen to finalize assignments.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/assignment_complete_screen\",\n            \"android\": \"ActivityAssignmentComplete\",\n            \"ios\": \"ActivityAssignmentComplete\"\n        }\n    },\n    {\n        \"intent_id\": 40,\n        \"intent\": \"navigate_to_quick_scan_summary\",\n        \"description\": \"Directs to the quick scan summary screen to view scan results on the mobile app.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/quick_scan_summary\",\n            \"android\": \"ActivityQuickScanSummary\",\n            \"ios\": \"Quick Scan Equipment\"\n        }\n    },\n    {\n        \"intent_id\": 41,\n        \"intent\": \"navigate_to_form_listing\",\n        \"description\": \"Navigates to the form list screen to view available forms for execution.\",\n        \"parameters\": {\n            \"app_id\": \"integer\"\n        },\n        \"required\": [\n            \"app_id\"\n        ],\n        \"responses\": {\n            \"web\": \"https://qa.sim.guardhat.com/form_listing_view\",\n            \"android\": \"ActivityFormListing\",\n            \"ios\": \"ActivityFormListing\"\n        }\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Intent By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code 200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Parse JSON safely\r",
+									"let responseData;\r",
+									"try {\r",
+									"    responseData = pm.response.json();\r",
+									"} catch (e) {\r",
+									"    pm.test(\"Response is valid JSON\", function () {\r",
+									"        pm.expect(e).to.be.null;\r",
+									"    });\r",
+									"    throw new Error(\"Response is not valid JSON\");\r",
+									"}\r",
+									"\r",
+									"// Test if response is an object\r",
+									"pm.test(\"Response is an object\", function () {\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"// Test for required keys and types\r",
+									"pm.test(\"Check if response has required keys and types\", function () {\r",
+									"    // Check required keys\r",
+									"    pm.expect(responseData).to.include.keys('intent_id', 'intent', 'description', 'parameters', 'required', 'responses');\r",
+									"    \r",
+									"    // Validate types\r",
+									"    pm.expect(responseData.intent_id).to.be.a('number');\r",
+									"    pm.expect(responseData.intent).to.be.a('string');\r",
+									"    pm.expect(responseData.description).to.be.a('string');\r",
+									"    pm.expect(responseData.parameters).to.be.an('object');\r",
+									"    pm.expect(responseData.required).to.be.an('array');\r",
+									"    pm.expect(responseData.responses).to.be.an('object');\r",
+									"    \r",
+									"    // Validate parameters object\r",
+									"    pm.expect(responseData.parameters).to.include.keys('app_id');\r",
+									"    pm.expect(responseData.parameters.app_id).to.equal('integer');\r",
+									"    \r",
+									"    // Validate required array\r",
+									"    pm.expect(responseData.required).to.include('app_id');\r",
+									"    \r",
+									"    // Validate responses object\r",
+									"    pm.expect(responseData.responses).to.include.keys('web', 'android', 'ios');\r",
+									"    pm.expect(responseData.responses.web).to.be.a('string');\r",
+									"    pm.expect(responseData.responses.android).to.be.a('string');\r",
+									"    pm.expect(responseData.responses.ios).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"pm.execution.setNextRequest(\"Create Intent\");\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/api/database/intents/{{intent_id}}"
+					},
+					"response": [
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{baseUrl}}/api/database/intents/{{intent_id}}"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "date",
+									"value": "Fri, 11 Jul 2025 08:05:09 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "content-length",
+									"value": "309"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"intent_id\": 1,\n    \"intent\": \"navigate_to_login_page\",\n    \"description\": \"Directs the user to the login page to authenticate and access the application.\",\n    \"parameters\": {\n        \"app_id\": \"integer\"\n    },\n    \"required\": [\n        \"app_id\"\n    ],\n    \"responses\": {\n        \"web\": \"https://qa.sim.guardhat.com/login_page\",\n        \"android\": \"ActivityLogin\",\n        \"ios\": \"ActivityLogin\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Intent By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code 200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Test for JSON response containing \"ok\": true\r",
+									"pm.test(\"Response body contains ok: true\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.ok).to.be.true;\r",
+									"});\r",
+									"\r",
+									"pm.execution.setNextRequest(null);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{baseUrl}}/api/database/intents/{{ephemeral_intent_id}}"
+					},
+					"response": [
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{baseUrl}}/api/database/intents/{{intent_id}}"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "date",
+									"value": "Fri, 11 Jul 2025 08:05:09 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "content-length",
+									"value": "309"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"intent_id\": 1,\n    \"intent\": \"navigate_to_login_page\",\n    \"description\": \"Directs the user to the login page to authenticate and access the application.\",\n    \"parameters\": {\n        \"app_id\": \"integer\"\n    },\n    \"required\": [\n        \"app_id\"\n    ],\n    \"responses\": {\n        \"web\": \"https://qa.sim.guardhat.com/login_page\",\n        \"android\": \"ActivityLogin\",\n        \"ios\": \"ActivityLogin\"\n    }\n}"
+						},
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{baseUrl}}/api/database/intents/{{ephemeral_intent_id}}"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "date",
+									"value": "Fri, 11 Jul 2025 08:18:52 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "content-length",
+									"value": "11"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Intent",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Fixed syntax error in the test script\r",
+									"// Test for status code 200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Parse JSON safely\r",
+									"let responseData;\r",
+									"try {\r",
+									"    responseData = pm.response.json();\r",
+									"} catch (e) {\r",
+									"    pm.test(\"Response is valid JSON\", function () {\r",
+									"        pm.expect(e).to.be.null;\r",
+									"    });\r",
+									"    throw new Error(\"Response is not valid JSON\");\r",
+									"}\r",
+									"\r",
+									"// Test if response is an object\r",
+									"pm.test(\"Response is an object\", function () {\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"// Test for required keys and types\r",
+									"pm.test(\"Check if response has required keys and types\", function () {\r",
+									"    // Check required keys\r",
+									"    pm.expect(responseData).to.include.keys('intent_id', 'intent', 'description', 'parameters', 'required', 'responses');\r",
+									"    \r",
+									"    // Validate types\r",
+									"    pm.expect(responseData.intent_id).to.be.a('number');\r",
+									"    pm.expect(responseData.intent).to.be.a('string');\r",
+									"    pm.expect(responseData.description).to.be.a('string');\r",
+									"    pm.expect(responseData.parameters).to.be.an('object');\r",
+									"    pm.expect(responseData.required).to.be.an('array');\r",
+									"    pm.expect(responseData.responses).to.be.an('object');\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"// Store ephemeral_intent_id as environment variable if tests pass\r",
+									"pm.test(\"Store ephemeral_intent_id\", function () {\r",
+									"    if (responseData.intent_id) {\r",
+									"        pm.collectionVariables.set(\"ephemeral_intent_id\", responseData.intent_id);\r",
+									"    } else {\r",
+									"        pm.expect.fail(\"No intent_id found in response\");\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.execution.setNextRequest(\"Delete Intent By ID\");\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"intent\": \"navigate_to_sample_page\",\r\n    \"description\": \"Directs the user to a sample page for demonstration purposes.\",\r\n    \"parameters\": {\r\n        \"sample_id\": \"sample_id\"\r\n    },\r\n    \"required\": [\r\n        \"sample_id\"\r\n    ],\r\n    \"responses\": {\r\n        \"web\": \"https://example.com/sample_page\",\r\n        \"android\": \"SampleActivity\",\r\n        \"ios\": \"SampleView\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/api/database/intents"
+					},
+					"response": [
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"intent\": \"navigate_to_sample_page\",\r\n    \"description\": \"Directs the user to a sample page for demonstration purposes.\",\r\n    \"parameters\": {\r\n        \"sample_id\": \"sample_id\"\r\n    },\r\n    \"required\": [\r\n        \"sample_id\"\r\n    ],\r\n    \"responses\": {\r\n        \"web\": \"https://example.com/sample_page\",\r\n        \"android\": \"SampleActivity\",\r\n        \"ios\": \"SampleView\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/api/database/intents"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "date",
+									"value": "Fri, 11 Jul 2025 08:17:39 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "content-length",
+									"value": "293"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"intent_id\": 42,\n    \"intent\": \"navigate_to_sample_page\",\n    \"description\": \"Directs the user to a sample page for demonstration purposes.\",\n    \"parameters\": {\n        \"sample_id\": \"sample_id\"\n    },\n    \"required\": [\n        \"sample_id\"\n    ],\n    \"responses\": {\n        \"web\": \"https://example.com/sample_page\",\n        \"android\": \"SampleActivity\",\n        \"ios\": \"SampleView\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Ollama",
+			"item": [
+				{
+					"name": "Index",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{ollamaUrl}}"
+					},
+					"response": [
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{ollamaUrl}}"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Jul 2025 07:59:06 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "17"
+								}
+							],
+							"cookie": [],
+							"body": "Ollama is running"
+						}
+					]
+				},
+				{
+					"name": "List Models",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Ollama has at least two models\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.models).to.be.an('array').that.has.lengthOf(2);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{ollamaUrl}}/api/tags"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "aatmun-api:8000"
+		},
+		{
+			"key": "ollamaUrl",
+			"value": "ollama:11434",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "intent_id",
+			"value": "1"
+		},
+		{
+			"key": "ephemeral_intent_id",
+			"value": ""
+		}
+	]
+}
