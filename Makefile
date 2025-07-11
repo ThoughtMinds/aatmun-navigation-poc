@@ -26,7 +26,7 @@ help:
 	@echo "  make stop [env=dev|prod]     - Stop services (default: dev)"
 	@echo "  make restart [env=dev|prod]  - Restart services (default: dev)"
 	@echo "  make logs [env=dev|prod]     - View logs from services (default: dev)"
-	@echo "  make clean                   - Clean the local database and python cache"
+	@echo "  make init                    - Pulls models inside the Ollama container"
 	@echo "  make dev                     - Run development environment with logs"
 	@echo ""
 	@echo "Examples:"
@@ -39,8 +39,10 @@ dev:
 	$(DOCKER_COMPOSE) -f $(DEV_COMPOSE_FILE) build --parallel && \
 	$(DOCKER_COMPOSE) -f $(DEV_COMPOSE_FILE) up --remove-orphans
 
-model:
+init:
+	$(DOCKER_COMPOSE) -f $(DEV_COMPOSE_FILE) up -d ollama
 	docker exec -it ollama /bin/bash ./entrypoint.sh
+	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) down ollama
 
 # Standard Docker Compose commands
 up:
@@ -66,8 +68,3 @@ restart:
 
 logs:
 	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) logs -f
-
-clean:
-	@bash -c "if [ -d ./data ]; then rm -rf ./data; fi" && \
-	@find . -type d -name '__pycache__' -exec rm -rf {} + && \
-	@docker volume prune -f
