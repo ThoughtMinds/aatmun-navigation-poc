@@ -1,10 +1,13 @@
 from typing import Dict, List, Optional
 from fastapi import HTTPException
 from sqlmodel import Session, select, delete
+from sqlalchemy.exc import IntegrityError
 from app import db, schema
 
 
-def create_intent_db(intent: schema.IntentCreate, session: Session) -> schema.IntentResponse:
+def create_intent_db(
+    intent: schema.IntentCreate, session: Session
+) -> schema.IntentResponse:
     """Create a new intent in the database with associated parameters, required parameters, and responses.
 
     Args:
@@ -17,33 +20,55 @@ def create_intent_db(intent: schema.IntentCreate, session: Session) -> schema.In
     Raises:
         HTTPException: If there is a database error (e.g., unique constraint violation).
     """
-    db_intent = db.Intent(intent_name=intent.intent, description=intent.description, chroma_id=intent.chroma_id)
+    db_intent = db.Intent(
+        intent_name=intent.intent,
+        description=intent.description,
+        chroma_id=intent.chroma_id,
+    )
     session.add(db_intent)
     session.commit()
     session.refresh(db_intent)
-    
+
     for param_name, param_type in intent.parameters.items():
-        db_param = db.Parameter(intent_id=db_intent.intent_id, parameter_name=param_name, parameter_type=param_type)
+        db_param = db.Parameter(
+            intent_id=db_intent.intent_id,
+            parameter_name=param_name,
+            parameter_type=param_type,
+        )
         session.add(db_param)
-    
+
     for param_name in intent.required:
-        db_required = db.RequiredParameter(intent_id=db_intent.intent_id, parameter_name=param_name)
+        db_required = db.RequiredParameter(
+            intent_id=db_intent.intent_id, parameter_name=param_name
+        )
         session.add(db_required)
-    
+
     for platform, response_value in intent.responses.items():
-        db_response = db.Response(intent_id=db_intent.intent_id, platform=platform, response_value=response_value)
+        db_response = db.Response(
+            intent_id=db_intent.intent_id,
+            platform=platform,
+            response_value=response_value,
+        )
         session.add(db_response)
-    
-    session.commit()
-    
+
+    try:
+        session.commit()
+    except IntegrityError as e:
+        session.rollback()
+        raise HTTPException(
+            status_code=400,
+            detail="Database error: Unable to save parameters or responses due to a constraint violation",
+        )
+
     return schema.IntentResponse(
         intent_id=db_intent.intent_id,
         intent=db_intent.intent_name,
         description=db_intent.description,
         parameters=intent.parameters,
         required=intent.required,
-        responses=intent.responses
+        responses=intent.responses,
     )
+
 
 def read_intent_db(intent_id: int, session: Session) -> schema.IntentResponse:
     """Retrieve an intent from the database by its ID, including associated parameters, required parameters, and responses.
@@ -61,32 +86,37 @@ def read_intent_db(intent_id: int, session: Session) -> schema.IntentResponse:
     intent = session.get(db.Intent, intent_id)
     if not intent:
         raise HTTPException(status_code=404, detail="Intent not found")
-    
+
     parameters = session.exec(
         select(db.Parameter).where(db.Parameter.intent_id == intent_id)
     ).all()
-    parameters_dict = {param.parameter_name: param.parameter_type for param in parameters}
-    
+    parameters_dict = {
+        param.parameter_name: param.parameter_type for param in parameters
+    }
+
     required_params = session.exec(
         select(db.RequiredParameter).where(db.RequiredParameter.intent_id == intent_id)
     ).all()
     required_list = [param.parameter_name for param in required_params]
-    
+
     responses = session.exec(
         select(db.Response).where(db.Response.intent_id == intent_id)
     ).all()
     responses_dict = {resp.platform: resp.response_value for resp in responses}
-    
+
     return schema.IntentResponse(
         intent_id=intent.intent_id,
         intent=intent.intent_name,
         description=intent.description,
         parameters=parameters_dict,
         required=required_list,
-        responses=responses_dict
+        responses=responses_dict,
     )
 
-def read_intents_db(session: Session, offset: int = 0, limit: Optional[int] = None) -> List[schema.IntentResponse]:
+
+def read_intents_db(
+    session: Session, offset: int = 0, limit: Optional[int] = None
+) -> List[schema.IntentResponse]:
     """Retrieve a paginated list of all intents from the database with their parameters, required parameters, and responses.
 
     Args:
@@ -106,27 +136,34 @@ def read_intents_db(session: Session, offset: int = 0, limit: Optional[int] = No
         parameters = session.exec(
             select(db.Parameter).where(db.Parameter.intent_id == intent.intent_id)
         ).all()
-        parameters_dict = {param.parameter_name: param.parameter_type for param in parameters}
-        
+        parameters_dict = {
+            param.parameter_name: param.parameter_type for param in parameters
+        }
+
         required_params = session.exec(
-            select(db.RequiredParameter).where(db.RequiredParameter.intent_id == intent.intent_id)
+            select(db.RequiredParameter).where(
+                db.RequiredParameter.intent_id == intent.intent_id
+            )
         ).all()
         required_list = [param.parameter_name for param in required_params]
-        
+
         responses = session.exec(
             select(db.Response).where(db.Response.intent_id == intent.intent_id)
         ).all()
         responses_dict = {resp.platform: resp.response_value for resp in responses}
-        
-        result.append(schema.IntentResponse(
-            intent_id=intent.intent_id,
-            intent=intent.intent_name,
-            description=intent.description,
-            parameters=parameters_dict,
-            required=required_list,
-            responses=responses_dict
-        ))
+
+        result.append(
+            schema.IntentResponse(
+                intent_id=intent.intent_id,
+                intent=intent.intent_name,
+                description=intent.description,
+                parameters=parameters_dict,
+                required=required_list,
+                responses=responses_dict,
+            )
+        )
     return result
+
 
 def delete_intent_db(intent_id: int, session: Session) -> Dict[str, bool]:
     """Delete an intent and its associated data (parameters, required parameters, responses) from the database.
