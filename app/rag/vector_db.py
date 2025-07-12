@@ -91,8 +91,6 @@ def insert_intent(intent: schema.IntentCreate, session: Session) -> str:
         persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
         collection_name="Navigation_Collection",
     )
-    
-    print(f"{vectorstore.get()['ids'][-1]=} | {vectorstore.get()['documents'][-1]=}")
     print(f"Added Document to Chroma database")
-    chroma_id = "cjkedf"
+    chroma_id = vectorstore.get()['ids'][-1]
     return chroma_id
