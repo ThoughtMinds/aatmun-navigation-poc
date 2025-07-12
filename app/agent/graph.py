@@ -19,10 +19,21 @@ def retrieve(state: State):
 
 def generate(state: State):
     context = ""
-    for doc in state["context"]:
-        context += f"{doc.metadata['id']} - {doc.page_content} | "
-    response = llm.rag_chain.invoke({"query": state["question"], "context": context})
-    return {"navigation": response}
+    id_mapping = {}
+    
+    for i, doc in enumerate(state["context"], start=1):
+        id_mapping[i] = doc.id
+        context += f"{i} - {doc.page_content} | "
+    try:
+        response = llm.rag_chain.invoke({"query": state["question"], "context": context})
+        if response:
+            id = response.id
+            response.id = id_mapping.get(id, None)
+            return {"navigation": response}
+            
+    except Exception as e:
+        print(f"Failed to get Navigation due to: {e}")
+        
 
 
 graph_builder = StateGraph(State).add_sequence([retrieve, generate])
