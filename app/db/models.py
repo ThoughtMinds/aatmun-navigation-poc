@@ -5,6 +5,7 @@ class Intent(SQLModel, table=True):
     intent_id: int | None = Field(default=None, primary_key=True)
     intent_name: str = Field(index=True, unique=True)
     description: str | None = Field(default=None)
+    chroma_id: str | None = Field(default=None)
 
 class Parameter(SQLModel, table=True):
     parameter_id: int | None = Field(default=None, primary_key=True)
