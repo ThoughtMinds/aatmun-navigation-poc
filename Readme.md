@@ -81,10 +81,16 @@ jupyter notebook
 - [ ] Ensure sqlite updations are reflected in chroma
 - [x] Auto db init (if not exists) 
 - [x] Command to pull Ollama models
+- [ ] Improve LLM Accuracy
+    - [ ] Get more context (vectordb)
+    - [ ] Multiple LLM Call (best on N)
+    - [ ] Check if vector score is a good metric
+    - [ ] If LLM decision != vector top 1, re-consider evaluate_llm_decision (Node/Function)
 - [X] Use Newman for running tests
     - [ ] Update variable values
     - [ ] Add tests for new endpoints
 - [ ] Better logging
+    - [ ] Raise HTTP Exceptions
 - [x] Test Vector-Store Retrieval
 - [x] Add Navigation Agent
 - [x] Create Frontend
