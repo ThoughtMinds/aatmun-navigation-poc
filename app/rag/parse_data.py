@@ -16,9 +16,8 @@ def get_documents(navigation_intents: List[Dict]) -> List[Document]:
 
 
 def get_documents(navigation_intent: schema.IntentCreate) -> Document:
-    documents: List[Document] = []
     try:
         doc = Document(page_content=navigation_intent.description)
-        documents.append(doc)
+        return doc
     except Exception as e:
         print(f"Create document failed due to: {e}")
