@@ -18,6 +18,7 @@ chromadb = "*"
 langchain-chroma = "*"
 sqlmodel = "*"
 pandas = "*"
+python-multipart = "*"
 
 [dev-packages]
 black = "*"
