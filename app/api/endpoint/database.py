@@ -81,3 +81,9 @@ def delete_intent(intent_id: int, session: SessionDep) -> Dict[str, bool]:
         HTTPException: If the intent with the specified ID is not found (404).
     """
     return db.delete_intent_db(intent_id, session)
+
+
+@router.get("/get_intent_count")
+def get_intent_count(session: SessionDep) -> Dict[str, int]:
+    intent_count = db.count_intents_db(session=session)
+    return {"total_intents": intent_count}

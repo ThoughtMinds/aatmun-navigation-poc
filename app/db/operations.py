@@ -146,9 +146,23 @@ def delete_intent_db(intent_id: int, session: Session) -> Dict[str, bool]:
         raise HTTPException(status_code=404, detail="Intent not found")
 
     session.exec(delete(db.Parameter).where(db.Parameter.intent_id == intent_id))
-    session.exec(delete(db.RequiredParameter).where(db.RequiredParameter.intent_id == intent_id))
+    session.exec(
+        delete(db.RequiredParameter).where(db.RequiredParameter.intent_id == intent_id)
+    )
     session.exec(delete(db.Response).where(db.Response.intent_id == intent_id))
-    
+
     session.delete(intent)
     session.commit()
     return {"ok": True}
+
+
+def count_intents_db(session: Session) -> int:
+    """Retrieve the total count of intents in the database.
+
+    Args:
+        session (Session): The database session for executing queries.
+
+    Returns:
+        int: The total number of intents.
+    """
+    return session.query(db.Intent).count()
