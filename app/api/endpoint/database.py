@@ -5,9 +5,8 @@ from app import schema, db, rag
 
 
 router = APIRouter()
-SessionDep = Annotated[
-    Session, Depends(lambda: None)
-] 
+
+SessionDep = Annotated[Session, Depends(db.get_session)]
 
 
 @router.post("/intents/", response_model=schema.IntentResponse)
