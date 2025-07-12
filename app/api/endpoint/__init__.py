@@ -1,1 +1,0 @@
-from .database import insert_example_intents, read_intents
