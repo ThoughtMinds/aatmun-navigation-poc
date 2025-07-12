@@ -82,6 +82,8 @@ jupyter notebook
 - [x] Auto db init (if not exists) 
 - [x] Command to pull Ollama models
 - [X] Use Newman for running tests
+    - [ ] Update variable values
+    - [ ] Add tests for new endpoints
 - [ ] Better logging
 - [x] Test Vector-Store Retrieval
 - [x] Add Navigation Agent
@@ -97,3 +99,4 @@ jupyter notebook
 - [x] Expose Navigation Endpoint
     - [x] Query navigation
     - [ ] Add, Update, Delete Navigation Intents
+- [ ] Asciinema (svg docs) 
