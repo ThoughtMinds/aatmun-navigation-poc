@@ -2,9 +2,9 @@ from app.core.config import settings
 from langchain_chroma import Chroma
 from app import llm
 from .parse_data import get_documents
-from app import db
+from .load_data import load_sample_navigation_data
+from app import db, schema
 from sqlmodel import Session
-from app import api
 
 
 embeddings = llm.get_ollama_embeddings_model()
