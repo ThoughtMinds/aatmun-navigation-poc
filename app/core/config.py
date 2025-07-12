@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     OLLAMA_CHAT_FALLBACK_MODEL: str
     OLLAMA_EMBEDDINGS_MODEL: str
 
+    DATABASE_INIT_DATA: str
     CHROMA_PERSIST_DIRECTORY: str
 
     PROJECT_NAME: Optional[str] = "REST API"
