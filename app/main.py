@@ -8,10 +8,8 @@ from contextlib import asynccontextmanager
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Create tables if not exist and insert intent data
     db.create_db_and_tables()
-    # Create vector db
-    rag.create_vectorstore()
+    rag.ensure_vectorstore_exists()
     yield
     # Clean up 
     

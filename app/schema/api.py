@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Dict, List, Optional
 
 class IntentCreate(BaseModel):
+    chroma_id: Optional[str] = None # Not needed when creating intent
     intent: str
     description: str
     parameters: Dict[str, str]

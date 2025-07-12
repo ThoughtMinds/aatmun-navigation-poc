@@ -16,40 +16,83 @@ def get_vectorstore() -> Chroma:
     Returns:
         Chroma: A Chroma instance
     """
-    vectordb = Chroma(
-        persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
-        embedding_function=embeddings,
-        collection_name="Navigation_Collection"
-    )
+    try:
+        vectordb = Chroma(
+            persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
+            embedding_function=embeddings,
+            collection_name="Navigation_Collection",
+        )
+    except Exception as e:
+        print(f"Failed to load Chroma due to: {e}")
+        raise Exception(f"Could not load Chroma!")
     return vectordb
 
 
-def create_vectorstore() -> None:
+def ensure_vectorstore_exists() -> None:
     """Create Chroma database if not exists"""
     try:
         vectorstore = Chroma(
             persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
             embedding_function=embeddings,
-            collection_name="Navigation_Collection"
+            collection_name="Navigation_Collection",
         )
-        assert len(vectorstore.get()['documents']) != 0
-        print(f"Chroma database loaded from {settings.CHROMA_PERSIST_DIRECTORY}")
+        document_count = len(vectorstore.get()["documents"])
+        assert document_count != 0
+        print(f"Chroma database loaded from {settings.CHROMA_PERSIST_DIRECTORY} with {document_count} documents")
     except Exception as e:
-        print(f"Could not load Chroma database from {{settings.CHROMA_PERSIST_DIRECTORY}} due to: {e}")
-        print("Creating Chroma database")
-        session = Session(db.engine)
-        navigation_data = api.read_intents(session=session)
-        if len(navigation_data) == 0:
-            api.insert_example_intents(session=session)
-            print("Inserting Navigation Intents to Database")
-            navigation_data = api.read_intents(session=session)
-        print("Reading Navigation Intents from Database")
-        documents = get_documents(navigation_intents=navigation_data)
-        vectorstore = Chroma.from_documents(
-            documents=documents,
-            embedding=embeddings,
-            persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
-            collection_name="Navigation_Collection"
+        print(
+            f"Could not load Chroma database from {settings.CHROMA_PERSIST_DIRECTORY} {e}"
         )
-        print(f"Added {len(vectorstore.get()['documents'])} Intents to Chroma")
-        print(f"Saved Chroma database at {settings.CHROMA_PERSIST_DIRECTORY}")
+        create_vector_store()
+
+
+def create_vector_store() -> None:
+    print("Creating Chroma database")
+    sample_navigation_intents = load_sample_navigation_data()
+    if len(sample_navigation_intents) == 0:
+        print("No navigation data was loaded, databases will be empty!")
+        return
+   
+    print(f"Creating documents for {len(sample_navigation_intents)} Intents")
+    documents = get_documents(navigation_intents=sample_navigation_intents)
+    print(f"Creatied {len(documents)} Documents")
+    
+    vectorstore = Chroma.from_documents(
+        documents=documents,
+        embedding=embeddings,
+        persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
+        collection_name="Navigation_Collection",
+    )
+    print(f"Saved Chroma database at {settings.CHROMA_PERSIST_DIRECTORY}")
+    
+    chroma_ids = vectorstore.get()["ids"]
+    for intent, chroma_id in zip(sample_navigation_intents, chroma_ids):
+        intent["chroma_id"] = chroma_id
+    
+    session = Session(db.engine)
+    
+    insert_count = 0
+    for intent in sample_navigation_intents:
+        try:
+            intent = schema.IntentCreate(**intent)
+            db.create_intent_db(session=session, intent=intent)
+            insert_count += 1
+        except Exception as e:
+            print(f"Failed to insert Intent due to: {e}")
+    
+    print(f"Added {insert_count} Intents to Database")
+    
+    
+def insert_intent(intent: schema.IntentCreate, session: Session) -> str:
+    document = get_documents(navigation_intent=intent)
+    vectorstore = Chroma.from_documents(
+        documents=[document],
+        embedding=embeddings,
+        persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
+        collection_name="Navigation_Collection",
+    )
+    
+    print(f"{vectorstore.get()['ids'][-1]=} | {vectorstore.get()['documents'][-1]=}")
+    print(f"Added Document to Chroma database")
+    chroma_id = "cjkedf"
+    return chroma_id
