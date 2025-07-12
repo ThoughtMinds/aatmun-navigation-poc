@@ -28,7 +28,6 @@ services:
     volumes:
       - ./data/ollama:/root/.ollama
       - ./static/scripts/entrypoint.sh:/entrypoint.sh
-    # pull_policy: always
     tty: true
     restart: unless-stopped
     environment:
