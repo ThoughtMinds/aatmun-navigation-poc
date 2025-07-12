@@ -8,6 +8,8 @@ from json import load
 router = APIRouter()
 SessionDep = Annotated[Session, Depends(db.get_session)]
 
+# TODO: Ensure Create, Edit, Delete is also reflected in Chroma (use ID for search)
+
 @router.post("/intents/", response_model=schema.IntentResponse)
 def create_intent(intent: schema.IntentCreate, session: SessionDep) -> schema.IntentResponse:
     """Create a new intent with associated parameters, required parameters, and responses.
