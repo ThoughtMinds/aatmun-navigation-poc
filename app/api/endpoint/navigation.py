@@ -9,15 +9,21 @@ router = APIRouter()
 SessionDep = Annotated[Session, Depends(db.get_session)]
 
 
-@router.post("/get_navigation/", response_model=schema.Navigation)
+@router.post("/get_navigation/", response_model=schema.NavigationResponse)
 def get_navigation(
     intent: schema.NavigationQuery, session: SessionDep
 ) -> schema.Navigation:
     query = intent.query
     response = agent.graph.invoke({"question": query})
-    navigation = response["navigation"]
-    # TODO: Get navigation intent from db
-    return navigation
+    navigation: schema.Navigation = response["navigation"]
+
+    predicted_intent = db.get_intent_name_by_chroma_id_db(
+        chroma_id=navigation.id, session=session
+    )
+    navigation_response = schema.NavigationResponse(
+        id=navigation.id, reasoning=navigation.reasoning, intent_name=predicted_intent
+    )
+    return navigation_response
 
 
 @router.post("/test_naivgation/", response_model=List[schema.NavigationTestResult])
