@@ -19,6 +19,7 @@ langchain-chroma = "*"
 sqlmodel = "*"
 pandas = "*"
 python-multipart = "*"
+openpyxl = "*"
 
 [dev-packages]
 black = "*"
