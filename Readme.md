@@ -79,6 +79,9 @@ jupyter notebook
 - [x] Expose endpoints for SQLite
 - [ ] Add Username/Password OAuth
 - [ ] Ensure sqlite updations are reflected in chroma
+    - [x] Add
+    - [ ] Delete
+    - [ ] Update
 - [x] Auto db init (if not exists) 
 - [x] Command to pull Ollama models
 - [ ] Improve LLM Accuracy
@@ -99,9 +102,8 @@ jupyter notebook
         - [x] Delete
         - [ ] Update
     - [x] Navigation
-        - [ ] Get Navigation
-        - [ ] Run tests (excel file input)
-    
+        - [X] Get Navigation
+        - [X] Run tests (excel file input)
 - [x] Expose Navigation Endpoint
     - [x] Query navigation
     - [ ] Add, Update, Delete Navigation Intents
