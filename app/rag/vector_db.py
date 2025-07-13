@@ -38,7 +38,9 @@ def ensure_vectorstore_exists() -> None:
         )
         document_count = len(vectorstore.get()["documents"])
         assert document_count != 0
-        print(f"Chroma database loaded from {settings.CHROMA_PERSIST_DIRECTORY} with {document_count} documents")
+        print(
+            f"Chroma database loaded from {settings.CHROMA_PERSIST_DIRECTORY} with {document_count} documents"
+        )
     except Exception as e:
         print(
             f"Could not load Chroma database from {settings.CHROMA_PERSIST_DIRECTORY} {e}"
@@ -52,11 +54,11 @@ def create_vector_store() -> None:
     if len(sample_navigation_intents) == 0:
         print("No navigation data was loaded, databases will be empty!")
         return
-   
+
     print(f"Creating documents for {len(sample_navigation_intents)} Intents")
     documents = get_documents(navigation_intents=sample_navigation_intents)
     print(f"Creatied {len(documents)} Documents")
-    
+
     vectorstore = Chroma.from_documents(
         documents=documents,
         embedding=embeddings,
@@ -64,13 +66,13 @@ def create_vector_store() -> None:
         collection_name="Navigation_Collection",
     )
     print(f"Saved Chroma database at {settings.CHROMA_PERSIST_DIRECTORY}")
-    
+
     chroma_ids = vectorstore.get()["ids"]
     for intent, chroma_id in zip(sample_navigation_intents, chroma_ids):
         intent["chroma_id"] = chroma_id
-    
+
     session = Session(db.engine)
-    
+
     insert_count = 0
     for intent in sample_navigation_intents:
         try:
@@ -79,11 +81,11 @@ def create_vector_store() -> None:
             insert_count += 1
         except Exception as e:
             print(f"Failed to insert Intent due to: {e}")
-    
+
     print(f"Added {insert_count} Intents to Database")
-    
-    
-def insert_intent(intent: schema.IntentCreate, session: Session) -> str:
+
+
+def insert_intent(intent: schema.IntentCreate) -> str:
     document = get_documents(navigation_intent=intent)
     vectorstore = Chroma.from_documents(
         documents=[document],
