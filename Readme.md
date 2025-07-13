@@ -80,8 +80,8 @@ jupyter notebook
 - [ ] Add Username/Password OAuth
 - [ ] Ensure sqlite updations are reflected in chroma
     - [x] Add
-    - [ ] Delete
-    - [ ] Update
+    - [x] Delete
+    - [x] Update
 - [x] Auto db init (if not exists) 
 - [x] Command to pull Ollama models
 - [ ] Improve LLM Accuracy
@@ -98,13 +98,16 @@ jupyter notebook
 - [x] Add Navigation Agent
 - [x] Create Frontend
     - [x] Database
+        - [x] Add pagination
+        - [x] Create,Edit Modals
         - [x] View
         - [x] Delete
-        - [ ] Update
+        - [x] Update
     - [x] Navigation
         - [X] Get Navigation
         - [X] Run tests (excel file input)
 - [x] Expose Navigation Endpoint
     - [x] Query navigation
     - [ ] Add, Update, Delete Navigation Intents
+- [ ] Server side API calls so routes aren't exposed and I can use internal hostnames not browser supported ones
 - [ ] Asciinema (svg docs) 
