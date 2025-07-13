@@ -25,7 +25,7 @@ def create_intent(
     Raises:
         HTTPException: If there is a database error (e.g., unique constraint violation).
     """
-    chroma_id = rag.insert_intent(intent=intent, session=session)
+    chroma_id = rag.insert_intent(intent=intent)
     intent.chroma_id = chroma_id
     return db.create_intent_db(intent, session)
 

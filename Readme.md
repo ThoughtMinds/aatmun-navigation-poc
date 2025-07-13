@@ -111,3 +111,4 @@ jupyter notebook
     - [ ] Add, Update, Delete Navigation Intents
 - [ ] Server side API calls so routes aren't exposed and I can use internal hostnames not browser supported ones
 - [ ] Asciinema (svg docs) 
+- [ ] IMPORTANT! - Update doc-strings
