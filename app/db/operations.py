@@ -224,3 +224,119 @@ def get_intent_name_by_chroma_id_db(chroma_id: str, session: Session) -> str:
     if not intent:
         raise HTTPException(status_code=404, detail="Intent not found")
     return intent.intent_name
+
+
+def update_intent_db(
+    intent_id: int, 
+    intent_update: schema.IntentCreate, 
+    session: Session
+) -> schema.IntentResponse:
+    """Update an existing intent in the database with new data for name, description, parameters, required parameters, and responses.
+
+    Args:
+        intent_id (int): The ID of the intent to update.
+        intent_update (schema.IntentCreate): The updated intent data including name, description, parameters, required parameters, and responses.
+        session (Session): The database session for executing queries.
+
+    Returns:
+        schema.IntentResponse: The updated intent with its ID, name, description, parameters, required parameters, and responses.
+
+    Raises:
+        HTTPException: If the intent with the specified ID is not found (404) or if there is a database error (e.g., unique constraint violation).
+    """
+    intent = session.get(db.Intent, intent_id)
+    chroma_id = intent.chroma_id
+    
+    if not intent:
+        raise HTTPException(status_code=404, detail="Intent not found")
+
+    # Update main intent fields
+    intent.intent_name = intent_update.intent
+    intent.description = intent_update.description
+    intent.chroma_id = intent_update.chroma_id
+
+    # Delete existing related data
+    session.exec(delete(db.Parameter).where(db.Parameter.intent_id == intent_id))
+    session.exec(delete(db.RequiredParameter).where(db.RequiredParameter.intent_id == intent_id))
+    session.exec(delete(db.Response).where(db.Response.intent_id == intent_id))
+
+    # Add new parameters
+    for param_name, param_type in intent_update.parameters.items():
+        db_param = db.Parameter(
+            intent_id=intent.intent_id,
+            parameter_name=param_name,
+            parameter_type=param_type,
+        )
+        session.add(db_param)
+
+    # Add new required parameters
+    for param_name in intent_update.required:
+        db_required = db.RequiredParameter(
+            intent_id=intent.intent_id,
+            parameter_name=param_name
+        )
+        session.add(db_required)
+
+    # Add new responses
+    for platform, response_value in intent_update.responses.items():
+        db_response = db.Response(
+            intent_id=intent.intent_id,
+            platform=platform,
+            response_value=response_value,
+        )
+        session.add(db_response)
+
+    try:
+        session.commit()
+        session.refresh(intent)
+    except IntegrityError as e:
+        session.rollback()
+        raise HTTPException(
+            status_code=400,
+            detail="Database error: Unable to update intent due to a constraint violation",
+        )
+
+    return chroma_id, schema.IntentResponse(
+        intent_id=intent.intent_id,
+        intent=intent.intent_name,
+        description=intent.description,
+        parameters=intent_update.parameters,
+        required=intent_update.required,
+        responses=intent_update.responses,
+    )
+    
+def update_intent_chroma_id_db(
+    intent_id: int, 
+    chroma_id: str, 
+    session: Session
+) -> bool:
+    """Update the chroma_id for an existing intent in the database.
+
+    Args:
+        intent_id (int): The ID of the intent to update.
+        chroma_id (str): The new chroma_id to set.
+        session (Session): The database session for executing queries.
+
+    Returns:
+        bool: True if the update was successful.
+
+    Raises:
+        HTTPException: If the intent with the specified ID is not found (404) or if there is a database error (400).
+    """
+    intent = session.get(db.Intent, intent_id)
+    if not intent:
+        raise HTTPException(status_code=404, detail="Intent not found")
+
+    intent.chroma_id = chroma_id
+
+    try:
+        session.commit()
+        session.refresh(intent)
+    except Exception as e:
+        session.rollback()
+        raise HTTPException(
+            status_code=400,
+            detail=f"Database error: Unable to update chroma_id - {str(e)}",
+        )
+
+    return True
