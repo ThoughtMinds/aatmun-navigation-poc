@@ -94,5 +94,15 @@ def insert_intent(intent: schema.IntentCreate) -> str:
         collection_name="Navigation_Collection",
     )
     print(f"Added Document to Chroma database")
-    chroma_id = vectorstore.get()['ids'][-1]
+    chroma_id = vectorstore.get()["ids"][-1]
     return chroma_id
+
+
+def delete_intent(chroma_id: str):
+    vectorstore = Chroma(
+        persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
+        embedding_function=embeddings,
+        collection_name="Navigation_Collection",
+    )
+    vectorstore.delete(ids=[chroma_id])
+    print(f"Deleted document with Chroma ID: {chroma_id}")
