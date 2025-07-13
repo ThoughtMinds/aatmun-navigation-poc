@@ -20,3 +20,8 @@ class IntentResponse(BaseModel):
 class NavigationQuery(BaseModel):
     query: str
     source: Optional[str] = None
+    
+class NavigationTestResult(BaseModel):
+    query: str
+    actual_intent: str
+    predicted_intent: str
