@@ -203,3 +203,24 @@ def count_intents_db(session: Session) -> int:
         int: The total number of intents.
     """
     return session.query(db.Intent).count()
+
+
+def get_intent_name_by_chroma_id_db(chroma_id: str, session: Session) -> str:
+    """Retrieve the intent name from the database by its chroma_id.
+
+    Args:
+        chroma_id (str): The chroma_id of the intent to retrieve.
+        session (Session): The database session for executing queries.
+
+    Returns:
+        str: The name of the intent.
+
+    Raises:
+        HTTPException: If the intent with the specified chroma_id is not found (404).
+    """
+    intent = session.exec(
+        select(db.Intent).where(db.Intent.chroma_id == chroma_id)
+    ).first()
+    if not intent:
+        raise HTTPException(status_code=404, detail="Intent not found")
+    return intent.intent_name
