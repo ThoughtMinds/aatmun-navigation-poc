@@ -60,13 +60,13 @@ async def upload_navigation_excel(
             predicted_intent = db.get_intent_name_by_chroma_id_db(
                 chroma_id=chroma_id, session=session
             )
-           
+
             result = schema.NavigationTestResult(
                 query=query,
                 actual_intent=actual_intent,
                 predicted_intent=predicted_intent,
             )
-            
+
             print(f"Result: {result}")
             navigation_results.append(result)
             # Measure accuracy, add score
