@@ -190,7 +190,7 @@ def delete_intent_db(intent_id: int, session: Session) -> Dict[str, bool]:
 
     session.delete(intent)
     session.commit()
-    return {"ok": True}
+    return intent.chroma_id
 
 
 def count_intents_db(session: Session) -> int:
