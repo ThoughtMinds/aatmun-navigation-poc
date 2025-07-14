@@ -53,6 +53,7 @@ interface NavigationTestResult {
   query: string
   actual_intent: string
   predicted_intent: string
+  response_time: number
 }
 
 interface NavigationResult {
