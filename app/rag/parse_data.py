@@ -15,7 +15,7 @@ def get_documents(navigation_intents: List[Dict]) -> List[Document]:
     return documents
 
 
-def get_documents(navigation_intent: schema.IntentCreate) -> Document:
+def get_document(navigation_intent: schema.IntentCreate) -> Document:
     try:
         doc = Document(page_content=navigation_intent.description)
         return doc

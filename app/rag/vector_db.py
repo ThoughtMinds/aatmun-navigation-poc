@@ -1,7 +1,7 @@
 from app.core.config import settings
 from langchain_chroma import Chroma
 from app import llm
-from .parse_data import get_documents
+from .parse_data import get_document, get_documents
 from .load_data import load_sample_navigation_data
 from app import db, schema
 from sqlmodel import Session
@@ -86,7 +86,7 @@ def create_vector_store() -> None:
 
 
 def insert_intent(intent: schema.IntentCreate) -> str:
-    document = get_documents(navigation_intent=intent)
+    document = get_document(navigation_intent=intent)
     vectorstore = Chroma.from_documents(
         documents=[document],
         embedding=embeddings,
