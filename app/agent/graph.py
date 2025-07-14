@@ -30,7 +30,6 @@ def generate(state: State):
             id = response.id
             response.id = id_mapping.get(id, None)
             return {"navigation": response}
-            
     except Exception as e:
         print(f"Failed to get Navigation due to: {e}")
         

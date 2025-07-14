@@ -3,6 +3,7 @@ from app import agent, db, schema
 import pandas as pd
 from typing import Annotated, List
 from sqlmodel import Session
+from time import time
 
 
 router = APIRouter()
@@ -14,7 +15,9 @@ def get_navigation(
     intent: schema.NavigationQuery, session: SessionDep
 ) -> schema.Navigation:
     query = intent.query
+    print(f"Request: {query}")
     response = agent.graph.invoke({"question": query})
+    print(f"Response: {response}")
     navigation: schema.Navigation = response["navigation"]
 
     predicted_intent = db.get_intent_name_by_chroma_id_db(
@@ -47,29 +50,40 @@ async def upload_navigation_excel(
         navigation_results = []
 
         for _, row in df.iterrows():
-            print(f"Testing Query #{_}")
-            query, actual_intent = row["Query"], row["Intent"]
+            try:
+                print(f"Testing Query #{_}")
+                query, actual_intent = row["Query"], row["Intent"]
 
-            if not query or not isinstance(query, str):
-                continue
+                if not query or not isinstance(query, str):
+                    continue
+                
+                start_time = time()
+                response = agent.graph.invoke({"question": query})
+                end_time = time()
+                
+                elapsed_time = end_time - start_time
+                elapsed_time = round(elapsed_time, 3)
+                print(f"Time taken: {elapsed_time:.4f} seconds")
+                
+                navigation: schema.Navigation = response["navigation"]
+                chroma_id = navigation.id
 
-            response = agent.graph.invoke({"question": query})
-            navigation: schema.Navigation = response["navigation"]
-            chroma_id = navigation.id
+                predicted_intent = db.get_intent_name_by_chroma_id_db(
+                    chroma_id=chroma_id, session=session
+                )
 
-            predicted_intent = db.get_intent_name_by_chroma_id_db(
-                chroma_id=chroma_id, session=session
-            )
+                result = schema.NavigationTestResult(
+                    query=query,
+                    actual_intent=actual_intent,
+                    predicted_intent=predicted_intent,
+                    response_time=elapsed_time
+                )
 
-            result = schema.NavigationTestResult(
-                query=query,
-                actual_intent=actual_intent,
-                predicted_intent=predicted_intent,
-            )
-
-            print(f"Result: {result}")
-            navigation_results.append(result)
-            # Measure accuracy, add score
+                print(f"Result: {result}")
+                navigation_results.append(result)
+                # Measure accuracy, add score
+            except Exception as e:
+                print(f"Failed to process test due to: {e}")
 
         if not navigation_results:
             raise HTTPException(
