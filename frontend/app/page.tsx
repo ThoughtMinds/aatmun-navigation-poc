@@ -176,7 +176,7 @@ export default function IntentManagementApp() {
       const formData = new FormData()
       formData.append("file", file)
 
-      const response = await fetch(`${API_BASE_URL}/api/navigation/test_naivgation/`, {
+      const response = await fetch(`${API_BASE_URL}/api/navigation/test_navigation/`, {
         method: "POST",
         body: formData,
       })
@@ -503,27 +503,37 @@ export default function IntentManagementApp() {
               {testResults.length > 0 && (
                 <div className="space-y-2">
                   <h4 className="font-medium">Test Results</h4>
-                  <div className="space-y-2 max-h-60 overflow-y-auto">
-                    {testResults.map((result, index) => (
-                      <Card key={index} className="p-3">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1 space-y-1">
-                            <div className="text-sm font-medium">{result.query}</div>
-                            <div className="text-xs text-muted-foreground">
-                              <div>Actual: {result.actual_intent}</div>
-                              <div>Predicted: {result.predicted_intent}</div>
-                            </div>
-                          </div>
-                          <div className="flex-shrink-0">
-                            {result.actual_intent === result.predicted_intent ? (
-                              <Check className="h-5 w-5 text-green-500" />
-                            ) : (
-                              <X className="h-5 w-5 text-red-500" />
-                            )}
-                          </div>
-                        </div>
-                      </Card>
-                    ))}
+                  <div className="border rounded-lg overflow-hidden">
+                    <div className="overflow-x-auto max-h-96">
+                      <table className="w-full text-sm">
+                        <thead className="bg-muted/50 border-b">
+                          <tr>
+                            <th className="text-left p-3 font-medium">User Query</th>
+                            <th className="text-left p-3 font-medium">Actual Intent</th>
+                            <th className="text-left p-3 font-medium">Predicted Intent</th>
+                            <th className="text-left p-3 font-medium">Response Time (s)</th>
+                            <th className="text-center p-3 font-medium">Match</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {testResults.map((result, index) => (
+                            <tr key={index} className="border-b hover:bg-muted/25">
+                              <td className="p-3 font-medium">{result.query}</td>
+                              <td className="p-3 text-muted-foreground">{result.actual_intent}</td>
+                              <td className="p-3 text-muted-foreground">{result.predicted_intent}</td>
+                              <td className="p-3 text-muted-foreground">{result.response_time}</td>
+                              <td className="p-3 text-center">
+                                {result.actual_intent === result.predicted_intent ? (
+                                  <Check className="h-4 w-4 text-green-500 mx-auto" />
+                                ) : (
+                                  <X className="h-4 w-4 text-red-500 mx-auto" />
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               )}
