@@ -106,9 +106,12 @@ jupyter notebook
     - [x] Navigation
         - [X] Get Navigation
         - [X] Run tests (excel file input)
+    - [ ] Remvove Chroam ID Edit option
 - [x] Expose Navigation Endpoint
     - [x] Query navigation
     - [ ] Add, Update, Delete Navigation Intents
 - [ ] Server side API calls so routes aren't exposed and I can use internal hostnames not browser supported ones
 - [ ] Asciinema (svg docs) 
 - [ ] IMPORTANT! - Update doc-strings
+- [ ] On fresh install, missing node_modules / .next folder
+- [ ] Streaming
