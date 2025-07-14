@@ -29,7 +29,7 @@ def get_navigation(
     return navigation_response
 
 
-@router.post("/test_naivgation/", response_model=List[schema.NavigationTestResult])
+@router.post("/test_navigation/", response_model=List[schema.NavigationTestResult])
 async def upload_navigation_excel(
     session: SessionDep,
     file: UploadFile = File(...),

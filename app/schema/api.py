@@ -25,3 +25,4 @@ class NavigationTestResult(BaseModel):
     query: str
     actual_intent: str
     predicted_intent: str
+    response_time: float
