@@ -2,6 +2,7 @@ from typing import Dict, List
 from langchain_core.documents import Document
 from app import schema
 
+
 def get_documents(navigation_intents: List[Dict]) -> List[Document]:
     documents: List[Document] = []
 
