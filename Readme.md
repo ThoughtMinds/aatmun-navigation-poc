@@ -148,7 +148,8 @@ npm run dev
     - [x] Navigation
         - [X] Get Navigation
         - [X] Run tests (excel file input)
-    - [ ] Remvove Chroma ID from Update intent
+    - [X] Remvove Chroma ID from Update intent
+    - [X] Split page.tsx into components
 - [x] Expose Navigation Endpoint
     - [x] Query navigation
     - [ ] Add, Update, Delete Navigation Intents
