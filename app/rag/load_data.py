@@ -20,5 +20,5 @@ def load_sample_navigation_data() -> List[Dict]:
     except Exception as e:
         print(f"Failed to load navigation intents due to: {e}")
         sample_navigation_intents = []
-        
+
     return sample_navigation_intents

@@ -56,15 +56,15 @@ async def upload_navigation_excel(
 
                 if not query or not isinstance(query, str):
                     continue
-                
+
                 start_time = time()
                 response = agent.graph.invoke({"question": query})
                 end_time = time()
-                
+
                 elapsed_time = end_time - start_time
                 elapsed_time = round(elapsed_time, 3)
                 print(f"Time taken: {elapsed_time:.4f} seconds")
-                
+
                 navigation: schema.Navigation = response["navigation"]
                 chroma_id = navigation.id
 
@@ -76,7 +76,7 @@ async def upload_navigation_excel(
                     query=query,
                     actual_intent=actual_intent,
                     predicted_intent=predicted_intent,
-                    response_time=elapsed_time
+                    response_time=elapsed_time,
                 )
 
                 print(f"Result: {result}")

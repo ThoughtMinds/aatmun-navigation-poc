@@ -84,11 +84,12 @@ def delete_intent(intent_id: int, session: SessionDep) -> Dict[str, bool]:
     rag.delete_intent(chroma_id=chroma_id)
     return {"ok": True}
 
+
 @router.put("/intents/{intent_id}", response_model=schema.IntentResponse)
 async def update_intent(
     intent_id: int,
     intent_update: schema.IntentCreate,
-    session: Session = Depends(db.get_session)
+    session: Session = Depends(db.get_session),
 ):
     """Update an existing intent by ID.
 
@@ -103,7 +104,7 @@ async def update_intent(
     Raises:
         HTTPException: If the intent is not found (404) or if there's a database error (400).
     """
-    chroma_id, response =  db.update_intent_db(intent_id, intent_update, session)
+    chroma_id, response = db.update_intent_db(intent_id, intent_update, session)
     rag.delete_intent(chroma_id=chroma_id)
     chroma_id = rag.insert_intent(intent=intent_update)
     db.update_intent_chroma_id_db(intent_id, chroma_id, session)

@@ -68,6 +68,7 @@ def get_ollama_chat_fallback_model():
         model=settings.OLLAMA_CHAT_FALLBACK_MODEL,
     )
 
+
 @with_cached_embeddings
 def get_ollama_embeddings_model():
     """Initialize an Ollama Embeddings Model for LLM inference

@@ -227,9 +227,7 @@ def get_intent_name_by_chroma_id_db(chroma_id: str, session: Session) -> str:
 
 
 def update_intent_db(
-    intent_id: int, 
-    intent_update: schema.IntentCreate, 
-    session: Session
+    intent_id: int, intent_update: schema.IntentCreate, session: Session
 ) -> schema.IntentResponse:
     """Update an existing intent in the database with new data for name, description, parameters, required parameters, and responses.
 
@@ -246,7 +244,7 @@ def update_intent_db(
     """
     intent = session.get(db.Intent, intent_id)
     chroma_id = intent.chroma_id
-    
+
     if not intent:
         raise HTTPException(status_code=404, detail="Intent not found")
 
@@ -257,7 +255,9 @@ def update_intent_db(
 
     # Delete existing related data
     session.exec(delete(db.Parameter).where(db.Parameter.intent_id == intent_id))
-    session.exec(delete(db.RequiredParameter).where(db.RequiredParameter.intent_id == intent_id))
+    session.exec(
+        delete(db.RequiredParameter).where(db.RequiredParameter.intent_id == intent_id)
+    )
     session.exec(delete(db.Response).where(db.Response.intent_id == intent_id))
 
     # Add new parameters
@@ -272,8 +272,7 @@ def update_intent_db(
     # Add new required parameters
     for param_name in intent_update.required:
         db_required = db.RequiredParameter(
-            intent_id=intent.intent_id,
-            parameter_name=param_name
+            intent_id=intent.intent_id, parameter_name=param_name
         )
         session.add(db_required)
 
@@ -304,11 +303,10 @@ def update_intent_db(
         required=intent_update.required,
         responses=intent_update.responses,
     )
-    
+
+
 def update_intent_chroma_id_db(
-    intent_id: int, 
-    chroma_id: str, 
-    session: Session
+    intent_id: int, chroma_id: str, session: Session
 ) -> bool:
     """Update the chroma_id for an existing intent in the database.
 

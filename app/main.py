@@ -11,10 +11,12 @@ async def lifespan(app: FastAPI):
     db.create_db_and_tables()
     rag.ensure_vectorstore_exists()
     yield
-    # Clean up 
-    
-    
-server = FastAPI(title=settings.PROJECT_NAME, version=settings.VERSION, lifespan=lifespan)
+    # Clean up
+
+
+server = FastAPI(
+    title=settings.PROJECT_NAME, version=settings.VERSION, lifespan=lifespan
+)
 
 server.add_middleware(
     CORSMiddleware,
@@ -30,8 +32,7 @@ server.add_middleware(LoggingMiddleware)
 
 server.include_router(api.api_router, prefix="/api")
 
+
 @server.get("/")
 def index():
-    return {
-        "version": settings.VERSION
-    }
+    return {"version": settings.VERSION}
