@@ -118,30 +118,26 @@ Run the React application
 npm run dev
 ```
 
-## To-Do:
-
-# Project Checklist
+## Checklist
 
 - [x] Expose endpoints for SQLite
-- [ ] Add Username/Password OAuth
-- [ ] Ensure sqlite updations are reflected in chroma
-    - [x] Add
-    - [x] Delete
-    - [x] Update
-- [x] Auto db init (if not exists) 
-- [x] Command to pull Ollama models
+- [ ] Add OAuth (JWT Token from user/pwd)
+- [x] Test Vector-Store Retrieval
+- [x] Add Navigation Agent
+- [X] Ensure Chroma & Sqlite updates are synced
+- [x] Populate fresh db with dummy data
+- [x] Pull Ollama models on first run
 - [ ] Improve LLM Accuracy
     - [ ] Get more context (vectordb)
     - [ ] Multiple LLM Call (best on N)
     - [ ] Check if vector score is a good metric
-    - [ ] If LLM decision != vector top 1, re-consider evaluate_llm_decision (Node/Function)
-- [X] Use Newman for running tests
-    - [ ] Update variable values
+    - [ ] If LLM, Retriever discerepancy, re-evaluate
+    - [ ] Get accuracy feedback from user (logging)
+- [X] Use Newman for API Test
+    - [ ] Dynamically update variable values
     - [ ] Add tests for new endpoints
 - [ ] Better logging
     - [ ] Raise HTTP Exceptions
-- [x] Test Vector-Store Retrieval
-- [x] Add Navigation Agent
 - [x] Create Frontend
     - [x] Database
         - [x] Add pagination
@@ -152,12 +148,12 @@ npm run dev
     - [x] Navigation
         - [X] Get Navigation
         - [X] Run tests (excel file input)
-    - [ ] Remvove Chroam ID Edit option
+    - [ ] Remvove Chroma ID from Update intent
 - [x] Expose Navigation Endpoint
     - [x] Query navigation
     - [ ] Add, Update, Delete Navigation Intents
-- [ ] Server side API calls so routes aren't exposed and I can use internal hostnames not browser supported ones
-- [ ] Asciinema (svg docs) 
-- [ ] IMPORTANT! - Update doc-strings
+- [ ] Server side API calls so routes aren't exposed and I can use internal hostnames
+- [x] Asciinema (svg docs) 
+- [ ] Update doc-strings
 - [ ] On fresh install, missing node_modules / .next folder
-- [ ] Streaming
+- [ ] Streaming for Test Cases
