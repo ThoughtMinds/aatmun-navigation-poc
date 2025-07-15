@@ -1,43 +1,41 @@
-# Aatmun - Research & Development
+# Aatmun - PoC
 
-### Architecture Diagram
+![Stack](https://skillicons.dev/icons?i=ubuntu,bash,py)
 
-![NavigationDiagram](./data/images/navigation_diagram.png)
 
-## Installation
+[Documentation](./data/docs/Documentation.md)
 
-It is recommended to use `pipenv` to manage dependencies.
+## Models
 
-```bash
-# install pipenv
-pip install pipenv
-```
+| Chat Model  | Embedding Model       |
+|-------------|-----------------------|
+| llama3.2:3b | nomic-embed-text:v1.5 |
 
-```bash
-# create a pipenv shell/virtualenv
-pipenv shell
-```
+Models are served through Ollama 
 
-```bash
-# install packages
-pipenv install
-```
-
-## Running
+## Usage
 
 The project is designed to run as docker containers with live reload.
 
-You need Chat `llama3.2:3b` and Embedding `nomic-embed-text` models to use the Navigation API. First time, run this command
+> [!NOTE]
+> Run this command on the first run to initialize
+
 
 ```bash
 make init
 ```
 
-Now you can do
+![Init command](./data/images/init.svg)
+
+
+Now simply run
 
 ```bash
 make dev
 ```
+
+![Dev command](./data/images/dev.svg)
+
 
 This will use the [docker-compose.yml](./docker-compose.yml) and build a FastAPI container image based on [Dockerfile](./Dockerfile).
 
@@ -47,29 +45,77 @@ docker ps --format '{{.Names}}'
 
 ```
 aatmun-api
+aatmun-frontend
 ollama
 ```
 
-### Test
+### Testing
 
-You can run tests using `newman`
+You can run tests for the API using `newman`
 
 ```bash
 make tests
 ```
 
+![Test command](./data/images/test.svg)
+
+
 ## Development
 
+### API
+
+Get pipenv
+
+```bash
+# install pipenv
+pip install pipenv
+```
+
+Create a virtual environment
+
+```bash
+# create a pipenv shell/virtualenv
+pipenv shell
+```
+
+Install packages with pipenv
+```bash
+# install packages
+pipenv install
+```
+
+### R&D
 All R&D has been documented as jupter [notebooks](./notebooks/). They can be explored by installing `jupter`
 
 ```bash
 pip install jupyter
 ```
 
-and running:
+and run:
 
 ```bash
 jupyter notebook
+```
+
+### Frontend
+Mount the local directory by uncommenting the following in [comopose](./docker-compose.yml)
+
+```yml
+volumes:
+    - ./frontend:/app
+```
+
+Install npm packages
+
+```bash
+cd frontend 
+npm i --force
+```
+
+Run the React application
+
+```bash
+npm run dev
 ```
 
 ## To-Do:
