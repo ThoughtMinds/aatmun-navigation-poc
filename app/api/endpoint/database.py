@@ -113,5 +113,14 @@ async def update_intent(
 
 @router.get("/get_intent_count")
 def get_intent_count(session: SessionDep) -> Dict[str, int]:
+    """
+    Get the total number of intents in the database.
+
+    Args:
+        session (SessionDep): The database session dependency.
+
+    Returns:
+        Dict[str, int]: A dictionary with the key 'total_intents' and the count of intents.
+    """
     intent_count = db.count_intents_db(session=session)
     return {"total_intents": intent_count}

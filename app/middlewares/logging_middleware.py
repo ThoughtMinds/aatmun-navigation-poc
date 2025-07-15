@@ -8,7 +8,26 @@ from app.core.logging_config import logger, request_id_var
 
 
 class LoggingMiddleware(BaseHTTPMiddleware):
+    """
+    FastAPI middleware for logging HTTP requests.
+
+    This middleware logs incoming requests and outgoing responses, including
+    the request ID, method, path, status code, and duration.
+    """
     async def dispatch(self, request: Request, call_next):
+        """
+        Process and log a request and its response.
+
+        This method generates a unique request ID, logs the incoming request,
+        awaits the response, and then logs the response details.
+
+        Args:
+            request (Request): The incoming HTTP request.
+            call_next (function): The next middleware or endpoint in the chain.
+
+        Returns:
+            Response: The HTTP response.
+        """
         request_id = str(uuid.uuid4())
         request_id_var.set(request_id)
 

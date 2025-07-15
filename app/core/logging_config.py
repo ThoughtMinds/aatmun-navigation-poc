@@ -29,6 +29,12 @@ handler.setFormatter(log_formatter)
 
 # Request ID filter
 class RequestIdFilter(logging.Filter):
+    """
+    A logging filter that injects the request_id into the log record.
+
+    This filter retrieves the request_id from a context variable and adds it
+    as an attribute to the log record, making it available in the log output.
+    """
     def filter(self, record):
         record.request_id = request_id_var.get()
         return True
@@ -42,6 +48,13 @@ base_logger.addHandler(handler)
 
 # LoggerAdapter to auto-inject request_id
 class RequestIdLoggerAdapter(logging.LoggerAdapter):
+    """
+    A logger adapter to automatically inject the request_id into log records.
+
+    This adapter ensures that the request_id from the context variable is
+    included in the 'extra' dictionary of the log record, which can then be
+    used by formatters.
+    """
     def process(self, msg, kwargs):
         if "extra" not in kwargs:
             kwargs["extra"] = {}
