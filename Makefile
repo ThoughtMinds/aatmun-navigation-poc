@@ -46,7 +46,7 @@ init:
 	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) down ollama
 
 test:
-	docker run --rm -v ./static/tests:/etc/newman --network aatmun-navigation-poc_aatmun -t postman/newman run aatmun_api_collection
+	docker run --rm -v ./static/tests:/etc/newman --network aatmun -t postman/newman run aatmun_api_collection
 
 # Standard Docker Compose commands
 up:
