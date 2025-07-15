@@ -14,7 +14,18 @@ query_store = LocalFileStore("./static/cache/query_cache")
 
 
 def with_navigation_output(func):
-    """Decorator to wrap a function that returns a ChatOllama model with structured Navigation output."""
+    """
+    Decorator to wrap a ChatOllama model with structured Navigation output.
+
+    This decorator takes a function that returns a ChatOllama model and modifies
+    it to include structured output for navigation using the schema.Navigation model.
+
+    Args:
+        func (function): The function that returns a ChatOllama model.
+
+    Returns:
+        function: The wrapped function that returns a model with structured output.
+    """
 
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -27,7 +38,19 @@ def with_navigation_output(func):
 
 
 def with_cached_embeddings(func):
-    """Decorator to wrap a function that returns a OllamaEmbeddings model with CacheBackedEmbeddings"""
+    """
+    Decorator to wrap an OllamaEmbeddings model with caching.
+
+    This decorator takes a function that returns an OllamaEmbeddings model and
+    wraps it with CacheBackedEmbeddings to provide caching for both document
+    and query embeddings.
+
+    Args:
+        func (function): The function that returns an OllamaEmbeddings model.
+
+    Returns:
+        function: The wrapped function that returns a cached embeddings model.
+    """
 
     @wraps(func)
     def wrapper(*args, **kwargs):

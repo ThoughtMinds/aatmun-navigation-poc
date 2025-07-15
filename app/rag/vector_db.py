@@ -11,10 +11,17 @@ embeddings = llm.get_ollama_embeddings_model()
 
 
 def get_vectorstore() -> Chroma:
-    """Loads Chroma database
+    """
+    Load the Chroma vector store.
+
+    This function loads the Chroma vector store from the directory specified in
+    the `CHROMA_PERSIST_DIRECTORY` setting.
 
     Returns:
-        Chroma: A Chroma instance
+        Chroma: A Chroma vector store instance.
+
+    Raises:
+        Exception: If the vector store cannot be loaded.
     """
     try:
         vectordb = Chroma(
@@ -29,7 +36,13 @@ def get_vectorstore() -> Chroma:
 
 
 def ensure_vectorstore_exists() -> None:
-    """Create Chroma database if not exists"""
+    """
+    Ensure that the Chroma vector store exists.
+
+    This function checks if the vector store can be loaded from the persisted
+    directory. If it can't, or if it's empty, it calls `create_vector_store`
+    to create a new one.
+    """
     try:
         vectorstore = Chroma(
             persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
@@ -49,6 +62,13 @@ def ensure_vectorstore_exists() -> None:
 
 
 def create_vector_store() -> None:
+    """
+    Create the Chroma vector store and populate the SQL database.
+
+    This function loads the sample navigation data, creates documents from it,
+    and then creates a new Chroma vector store. It also populates the SQL
+    database with the intent information, including the Chroma IDs.
+    """
     print("Creating Chroma database")
     sample_navigation_intents = load_sample_navigation_data()
     if len(sample_navigation_intents) == 0:
@@ -86,6 +106,18 @@ def create_vector_store() -> None:
 
 
 def insert_intent(intent: schema.IntentCreate) -> str:
+    """
+    Insert a single intent into the vector store.
+
+    This function takes an intent, creates a document from it, and adds it to
+    the Chroma vector store.
+
+    Args:
+        intent (schema.IntentCreate): The intent to insert.
+
+    Returns:
+        str: The Chroma ID of the inserted intent.
+    """
     document = get_document(navigation_intent=intent)
     vectorstore = Chroma.from_documents(
         documents=[document],
@@ -99,6 +131,15 @@ def insert_intent(intent: schema.IntentCreate) -> str:
 
 
 def delete_intent(chroma_id: str):
+    """
+    Delete an intent from the vector store.
+
+    This function deletes an intent from the Chroma vector store based on its
+    Chroma ID.
+
+    Args:
+        chroma_id (str): The Chroma ID of the intent to delete.
+    """
     vectorstore = Chroma(
         persist_directory=settings.CHROMA_PERSIST_DIRECTORY,
         embedding_function=embeddings,
