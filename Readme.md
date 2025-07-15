@@ -133,6 +133,7 @@ npm run dev
     - [ ] Check if vector score is a good metric
     - [ ] If LLM, Retriever discerepancy, re-evaluate
     - [ ] Get accuracy feedback from user (logging)
+    - [ ] LLM Cache for User Validated Output
 - [X] Use Newman for API Test
     - [ ] Dynamically update variable values
     - [ ] Add tests for new endpoints
@@ -156,5 +157,5 @@ npm run dev
     - [X] Add, Update, Delete Navigation Intents
 - [ ] Server side API calls so routes aren't exposed and I can use internal hostnames (Optional)
 - [x] Asciinema (svg docs) 
-- [ ] Update doc-strings
+- [x] Update doc-strings
 - [ ] Streaming for Test Cases
