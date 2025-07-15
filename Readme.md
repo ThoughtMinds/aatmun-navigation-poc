@@ -150,11 +150,11 @@ npm run dev
         - [X] Run tests (excel file input)
     - [X] Remvove Chroma ID from Update intent
     - [X] Split page.tsx into components
+    - [ ] Ensure frontend works off the bat on fresh clone
 - [x] Expose Navigation Endpoint
     - [x] Query navigation
-    - [ ] Add, Update, Delete Navigation Intents
-- [ ] Server side API calls so routes aren't exposed and I can use internal hostnames
+    - [X] Add, Update, Delete Navigation Intents
+- [ ] Server side API calls so routes aren't exposed and I can use internal hostnames (Optional)
 - [x] Asciinema (svg docs) 
 - [ ] Update doc-strings
-- [ ] On fresh install, missing node_modules / .next folder
 - [ ] Streaming for Test Cases
