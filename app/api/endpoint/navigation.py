@@ -79,7 +79,6 @@ async def test_navigation(
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error reading excel file: {e}")
 
-
     if "Query" not in df.columns:
         raise HTTPException(
             status_code=400, detail="Excel file must contain a 'Query' column"
@@ -119,6 +118,5 @@ async def test_navigation(
                 yield f"data: {result.json()}\n\n"
             except Exception as e:
                 print(f"Failed to process test due to: {e}")
-
 
     return StreamingResponse(generate_results(), media_type="text/event-stream")

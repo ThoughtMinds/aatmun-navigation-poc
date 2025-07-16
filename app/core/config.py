@@ -20,6 +20,7 @@ class Settings(BaseSettings):
         PROJECT_NAME (Optional[str]): The name of the project.
         VERSION (Optional[str]): The version of the project.
     """
+
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore"
     )
