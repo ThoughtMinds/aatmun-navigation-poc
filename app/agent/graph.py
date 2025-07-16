@@ -66,17 +66,59 @@ def generate(state: State):
 
     for i, doc in enumerate(state["context"], start=1):
         id_mapping[i] = doc.id
-        context += f"{i} - {doc.page_content} | "
+        context += (
+            f"ID: {i} Score: {doc.metadata['score']} Desciption: {doc.page_content} | "
+        )
+    print(f"Context:\n{context}\n")
     try:
-        response = llm.rag_chain.invoke(
+        first_response = llm.rag_chain.invoke(
             {"query": state["question"], "context": context}
         )
-        if response:
-            id = response.id
-            response.id = id_mapping.get(id, None)
-            return {"navigation": response}
+        print(f"Initial Response: {first_response}")
+        response = response_validation_with_fallback(
+            response=first_response,
+            context=state["context"],
+            question=state["question"],
+            mapping=id_mapping,
+        )
+        # Regenerate response if not same as vector match and score is >50
+        return {"navigation": response}
     except Exception as e:
         print(f"Failed to get Navigation due to: {e}")
+
+
+def response_validation_with_fallback(
+    question: str, context: List[Document], response: schema.Navigation, mapping: dict
+) -> schema.Navigation:
+    """Validate response and validate. Can result in multiple requests and longer request time
+
+    Args:
+        question (str): User query
+        context (List[Document]): List of documents to validate response accuracy
+        response (schema.Navigation): Original LLM Navigation response
+
+    Returns:
+        response: Original or regnerated Navigation
+    """
+    top_document: Document = context[0]
+    id, score = top_document.id, top_document.metadata["score"]
+
+    response.id = mapping.get(response.id, None)
+    score_above_threshold = score > 50
+    id_mismatch = response.id != id
+
+    print(f"{score_above_threshold=} | {id_mismatch=}")
+    if score_above_threshold and response.id != id:
+        print(f"[Query (regen)]: {question}")
+        response = llm.rag_chain.invoke({"query": question, "context": context})
+        print(f"Regenerated Response: {response}")
+        response.id = mapping.get(response.id, None)
+        if response.id == None:
+            response = schema.Navigation(
+                id=id, reasoning="Navigation with most semantic similarity"
+            )
+            print(f"Fallback Response: {response}")
+    return response
 
 
 graph_builder = StateGraph(State).add_sequence([retrieve, generate])
