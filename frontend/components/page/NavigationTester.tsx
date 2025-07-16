@@ -62,6 +62,7 @@ export function NavigationTester() {
     if (!file) return
 
     setLoading(true)
+    setTestResults([]) // Clear previous results
     try {
       const formData = new FormData()
       formData.append("file", file)
@@ -71,9 +72,31 @@ export function NavigationTester() {
         body: formData,
       })
 
-      if (response.ok) {
-        const results = await response.json()
-        setTestResults(results)
+      if (!response.body) return
+
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+
+        const chunk = decoder.decode(value)
+        const lines = chunk.split("\n\n")
+
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            const json = line.substring(6)
+            if (json) {
+              try {
+                const result = JSON.parse(json)
+                setTestResults((prevResults) => [...prevResults, result])
+              } catch (e) {
+                console.error("Failed to parse JSON:", json)
+              }
+            }
+          }
+        }
       }
     } catch (error) {
       console.error("Failed to test navigation:", error)
