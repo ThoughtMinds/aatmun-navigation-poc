@@ -2,7 +2,11 @@ from langchain_core.prompts import PromptTemplate
 from .base import get_ollama_chat_model, get_ollama_chat_fallback_model
 
 RAG_PROMPT = """
-You are an navigation assistant. You are given a list of navigation options with their ID.
+You are an navigation assistant. You are given a list of navigation options with their ID and score.
+Options with higher score are more likely to match the {{query}}. If the {{score}} is high and query is similar, always return it.
+Context Format:
+ID: {{id}} Score: {{score}} Description: {{description}} | ...
+
 Your task is to identify the option that is most similar to the user {query}
 Query: {query}
 Context: {context}
@@ -10,7 +14,7 @@ Schema:
 {{
 
     "id": ID,
-    "reasoning": <Reasoning for selecting this ID
+    "reasoning": <Clear reasoning for selecting this ID>
 }}
 Output:
 """
