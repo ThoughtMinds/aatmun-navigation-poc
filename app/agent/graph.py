@@ -2,6 +2,24 @@ from typing_extensions import List, TypedDict
 from langchain_core.documents import Document
 from app import rag, llm, schema
 from langgraph.graph import START, StateGraph
+from langchain_core.runnables import chain
+
+vectorstore = rag.get_vectorstore()
+
+NUM_RESULTS = 5
+
+
+@chain
+def retriever(query: str) -> List[Document]:
+    docs, scores = zip(
+        *vectorstore.similarity_search_with_relevance_scores(
+            query,
+        )
+    )
+    for doc, score in zip(docs, scores):
+        score = round(score, 2) * 100
+        doc.metadata["score"] = score
+    return docs
 
 
 class State(TypedDict):
@@ -28,9 +46,8 @@ def retrieve(state: State):
     Returns:
         dict: A dictionary containing the retrieved documents in the 'context' key.
     """
-    vectorstore = rag.get_vectorstore()
-    retriever = vectorstore.as_retriever()
     retrieved_docs = retriever.invoke(input=state["question"])
+    print(f"Retrieved Docs:\n{retrieved_docs}\n")
     return {"context": retrieved_docs}
 
 
