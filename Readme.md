@@ -127,11 +127,11 @@ npm run dev
 - [X] Ensure Chroma & Sqlite updates are synced
 - [x] Populate fresh db with dummy data
 - [x] Pull Ollama models on first run
-- [ ] Improve LLM Accuracy
-    - [ ] Get more context (vectordb)
-    - [ ] Multiple LLM Call (best on N)
-    - [ ] Check if vector score is a good metric
-    - [ ] If LLM, Retriever discerepancy, re-evaluate
+- [x] Improve LLM Accuracy
+    - [x] Get more context (vectordb)
+    - [x] Multiple LLM Call (best on N)
+    - [x] Check if vector score is a good metric
+    - [x] If LLM, Retriever discerepancy, re-evaluate
     - [ ] Get accuracy feedback from user (logging)
     - [ ] LLM Cache for User Validated Output
 - [X] Use Newman for API Test
@@ -158,4 +158,5 @@ npm run dev
 - [ ] Server side API calls so routes aren't exposed and I can use internal hostnames (Optional)
 - [x] Asciinema (svg docs) 
 - [x] Update doc-strings
-- [ ] Streaming for Test Cases
+- [x] Streaming for Test Cases
+- [ ] Ensure Ollama doesn't sleep too soon
