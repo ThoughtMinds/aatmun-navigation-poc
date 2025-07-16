@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from fastapi.responses import StreamingResponse
+import io
 from app import agent, db, schema
 import pandas as pd
 from typing import Annotated, List
@@ -42,26 +44,25 @@ def get_navigation(
     return navigation_response
 
 
-@router.post("/test_navigation/", response_model=List[schema.NavigationTestResult])
-async def upload_navigation_excel(
+@router.post("/test_navigation/")
+async def test_navigation(
     session: SessionDep,
     file: UploadFile = File(...),
-) -> List[schema.NavigationTestResult]:
+):
     """
     Test navigation intents by uploading an Excel file.
 
     This endpoint allows for batch testing of navigation intents. It accepts an
     Excel file containing 'Query' and 'Intent' columns. It processes each query,
     runs it through the navigation agent, and compares the predicted intent with
-    the actual intent.
+    the actual intent. The results are streamed back to the client.
 
     Args:
         session (SessionDep): The database session dependency.
         file (UploadFile): The Excel file containing test data.
 
     Returns:
-        List[schema.NavigationTestResult]: A list of test results, including the query,
-                                           actual intent, predicted intent, and response time.
+        StreamingResponse: A stream of JSON-encoded NavigationTestResult objects.
 
     Raises:
         HTTPException: If the file is not a valid Excel file, is missing the
@@ -73,18 +74,20 @@ async def upload_navigation_excel(
         )
 
     try:
-        df = pd.read_excel(file.file)
+        content = await file.read()
+        df = pd.read_excel(io.BytesIO(content))
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error reading excel file: {e}")
 
-        if "Query" not in df.columns:
-            raise HTTPException(
-                status_code=400, detail="Excel file must contain a 'Query' column"
-            )
 
-        navigation_results = []
+    if "Query" not in df.columns:
+        raise HTTPException(
+            status_code=400, detail="Excel file must contain a 'Query' column"
+        )
 
+    async def generate_results():
         for _, row in df.iterrows():
             try:
-                print(f"Testing Query #{_}")
                 query, actual_intent = row["Query"], row["Intent"]
 
                 if not query or not isinstance(query, str):
@@ -113,19 +116,9 @@ async def upload_navigation_excel(
                 )
 
                 print(f"Result: {result}")
-                navigation_results.append(result)
-                # Measure accuracy, add score
+                yield f"data: {result.json()}\n\n"
             except Exception as e:
                 print(f"Failed to process test due to: {e}")
 
-        if not navigation_results:
-            raise HTTPException(
-                status_code=400, detail="No valid queries found in the Excel file"
-            )
 
-        return navigation_results
-
-    except Exception as e:
-        raise HTTPException(
-            status_code=500, detail=f"Error processing Excel file: {str(e)}"
-        )
+    return StreamingResponse(generate_results(), media_type="text/event-stream")
