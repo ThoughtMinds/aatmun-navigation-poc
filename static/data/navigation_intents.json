@@ -1,7 +1,7 @@
 [
     {
         "intent": "navigate_to_login_page",
-        "description": "Directs the user to the login page to authenticate and access the application.",
+        "description": "Directs the user to the login page",
         "parameters": {
             "app_id": "integer"
         },
@@ -14,7 +14,7 @@
     },
     {
         "intent": "navigate_to_main_dashboard",
-        "description": "Navigates to the main dashboard, providing an overview of key application metrics and access points.",
+        "description": "Navigates to the main dashboard",
         "parameters": {
             "app_id": "integer"
         },
@@ -27,7 +27,7 @@
     },
     {
         "intent": "navigate_to_application_dashboard",
-        "description": "Takes the user to the application dashboard to view detailed application-specific data and controls.",
+        "description": "Navigates to the the application dashboard",
         "parameters": {
             "app_id": "integer"
         },
@@ -40,7 +40,7 @@
     },
     {
         "intent": "navigate_to_tab_list",
-        "description": "Directs to the tab list page displaying worker or event information in a tabular format.",
+        "description": "Directs to the tab list page",
         "parameters": {
             "app_id": "integer"
         },
@@ -53,7 +53,7 @@
     },
     {
         "intent": "navigate_to_worker_event_detail",
-        "description": "Navigates to a detailed view of a specific worker or event, including relevant metadata.",
+        "description": "Navigates to a detailed view of a specific worker or event",
         "parameters": {
             "app_id": "integer"
         },
@@ -66,7 +66,7 @@
     },
     {
         "intent": "navigate_to_resolve_event",
-        "description": "Takes the user to the event resolution page to take actions on specific events.",
+        "description": "Navigates to the the event resolution page.",
         "parameters": {
             "app_id": "integer"
         },
@@ -79,7 +79,7 @@
     },
     {
         "intent": "navigate_to_biometric_snapshot",
-        "description": "Directs to the biometric snapshot list page to view biometric data records.",
+        "description": "Directs to the biometric snapshot list page",
         "parameters": {
             "app_id": "integer"
         },
@@ -92,7 +92,7 @@
     },
     {
         "intent": "navigate_to_fleet_gas_readings",
-        "description": "Navigates to the fleet gas readings list to monitor gas-related data for fleet management.",
+        "description": "Navigates to the fleet gas readings page",
         "parameters": {
             "app_id": "integer"
         },
@@ -105,7 +105,7 @@
     },
     {
         "intent": "navigate_to_user_list",
-        "description": "Takes the user to the user list page to view and manage user profiles.",
+        "description": "Directs to user list page",
         "parameters": {
             "app_id": "integer"
         },
@@ -118,7 +118,7 @@
     },
     {
         "intent": "navigate_to_map_view",
-        "description": "Directs to the full-page map view to visualize geographical data and locations.",
+        "description": "Directs to the full-page map view",
         "parameters": {
             "app_id": "integer"
         },
@@ -131,7 +131,7 @@
     },
     {
         "intent": "navigate_to_device_onboarding",
-        "description": "Navigates to the device onboarding view to register or configure new devices.",
+        "description": "Navigates to the device onboarding view",
         "parameters": {
             "app_id": "integer"
         },
@@ -144,7 +144,7 @@
     },
     {
         "intent": "navigate_to_device_model_vertical",
-        "description": "Takes the user to the device model vertical page to view device model details in a structured format.",
+        "description": "Navigates to the the device model vertical page",
         "parameters": {
             "app_id": "integer"
         },
@@ -157,7 +157,7 @@
     },
     {
         "intent": "navigate_to_device_model_detail",
-        "description": "Directs to the device model detail screen to view specific device model information.",
+        "description": "Directs to the device model detail screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -170,7 +170,7 @@
     },
     {
         "intent": "navigate_to_entity_listing",
-        "description": "Navigates to the user or product listing screen to browse entities.",
+        "description": "Navigates to the entity listing screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -183,7 +183,7 @@
     },
     {
         "intent": "navigate_to_entity_search",
-        "description": "Takes the user to the user or product search screen to find specific entities.",
+        "description": "Navigates to entity search screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -196,7 +196,7 @@
     },
     {
         "intent": "navigate_to_user_add",
-        "description": "Directs to the page for adding a new user to the system.",
+        "description": "Directs to the User add page. Not product, task related",
         "parameters": {
             "app_id": "integer"
         },
@@ -209,7 +209,7 @@
     },
     {
         "intent": "navigate_to_user_preview",
-        "description": "Navigates to the user preview page to review user details before saving.",
+        "description": "Navigates to the user preview page",
         "parameters": {
             "app_id": "integer"
         },
@@ -222,7 +222,7 @@
     },
     {
         "intent": "navigate_to_user_edit",
-        "description": "Takes the user to the user edit page to modify existing user information.",
+        "description": "Navigates to the the user edit page",
         "parameters": {
             "app_id": "integer"
         },
@@ -235,7 +235,7 @@
     },
     {
         "intent": "navigate_to_product_add",
-        "description": "Directs to the product add view to register a new product in the system.",
+        "description": "Directs to the product add view",
         "parameters": {
             "app_id": "integer"
         },
@@ -248,7 +248,7 @@
     },
     {
         "intent": "navigate_to_product_preview",
-        "description": "Navigates to the product preview view to review product details before saving.",
+        "description": "Navigates to the product preview view",
         "parameters": {
             "app_id": "integer"
         },
@@ -261,7 +261,7 @@
     },
     {
         "intent": "navigate_to_product_edit",
-        "description": "Takes the user to the product edit view to modify existing product information.",
+        "description": "Navigates to the the product edit view.",
         "parameters": {
             "app_id": "integer"
         },
@@ -274,7 +274,7 @@
     },
     {
         "intent": "navigate_to_entity_filter",
-        "description": "Directs to the user or product filter screen to refine search results.",
+        "description": "Directs to the user or product filter screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -287,7 +287,7 @@
     },
     {
         "intent": "navigate_to_tasks_list",
-        "description": "Navigates to the issue screen to view a list of reported tasks or issues.",
+        "description": "Navigates to the tasks list screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -300,7 +300,7 @@
     },
     {
         "intent": "navigate_to_task_preview",
-        "description": "Takes the user to the issue preview screen to view details of a specific task or issue.",
+        "description": "Navigates to the the issue preview screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -313,7 +313,7 @@
     },
     {
         "intent": "navigate_to_new_issue",
-        "description": "Directs to the issue add or edit screen to create or modify an issue.",
+        "description": "Directs to the issue add screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -326,7 +326,7 @@
     },
     {
         "intent": "navigate_to_task_filter",
-        "description": "Navigates to the issue filter view to refine the list of tasks or issues.",
+        "description": "Navigates to the issue filter view",
         "parameters": {
             "app_id": "integer"
         },
@@ -339,7 +339,7 @@
     },
     {
         "intent": "navigate_to_identifiers",
-        "description": "Takes the user to the identifiers screen to manage identifier data.",
+        "description": "Navigates to the identifiers screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -352,7 +352,7 @@
     },
     {
         "intent": "navigate_to_identifiers_complete",
-        "description": "Directs to the identifiers complete screen to confirm identifier updates.",
+        "description": "Directs to the identifiers complete screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -365,7 +365,7 @@
     },
     {
         "intent": "navigate_to_form_executions",
-        "description": "Navigates to the form executions listing view to select a form type for execution.",
+        "description": "Navigates to the form executions view",
         "parameters": {
             "app_id": "integer"
         },
@@ -378,7 +378,7 @@
     },
     {
         "intent": "navigate_to_questions_component",
-        "description": "Takes the user to the questions component screen for inspections like product, worker, or area.",
+        "description": "Navigates to the questions component screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -391,7 +391,7 @@
     },
     {
         "intent": "navigate_to_worker_fit_test",
-        "description": "Directs to the worker fit test and training screen for worker-related assessments.",
+        "description": "Directs to the worker fit test",
         "parameters": {
             "app_id": "integer"
         },
@@ -404,7 +404,7 @@
     },
     {
         "intent": "navigate_to_question_inflater",
-        "description": "Navigates to the questions screen for dynamic question rendering during inspections.",
+        "description": "Navigates to the questions inflater screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -417,7 +417,7 @@
     },
     {
         "intent": "navigate_to_checklist_complete",
-        "description": "Takes the user to the checklist complete screen to finalize checklist submissions.",
+        "description": "Navigates to the checklist complete screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -430,7 +430,7 @@
     },
     {
         "intent": "navigate_to_commission_screen",
-        "description": "Directs to the commission screen to add items to inventory.",
+        "description": "Navigates to comissions screen. Not same as commission complete",
         "parameters": {
             "app_id": "integer"
         },
@@ -443,7 +443,7 @@
     },
     {
         "intent": "navigate_to_commission_complete",
-        "description": "Navigates to the commission complete screen to confirm inventory additions.",
+        "description": "Navigates to the commission complete screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -456,7 +456,7 @@
     },
     {
         "intent": "navigate_to_assign_screen",
-        "description": "Takes the user to the assignment screen to manage assignments of products or workers.",
+        "description": "Navigates to the the assignment screen ",
         "parameters": {
             "app_id": "integer"
         },
@@ -469,7 +469,7 @@
     },
     {
         "intent": "navigate_to_assignment_component",
-        "description": "Directs to the assignment component for linking products to areas or workers.",
+        "description": "Directs to the assignment component",
         "parameters": {
             "app_id": "integer"
         },
@@ -482,7 +482,7 @@
     },
     {
         "intent": "navigate_to_search_worker",
-        "description": "Navigates to the search worker screen for assigning workers to areas or products.",
+        "description": "Navigates to the search worker screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -495,7 +495,7 @@
     },
     {
         "intent": "navigate_to_assignment_complete",
-        "description": "Takes the user to the assignment complete screen to finalize assignments.",
+        "description": "Navigates to the the assignment complete screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -508,7 +508,7 @@
     },
     {
         "intent": "navigate_to_quick_scan_summary",
-        "description": "Directs to the quick scan summary screen to view scan results on the mobile app.",
+        "description": "Directs to the quick scan summary screen",
         "parameters": {
             "app_id": "integer"
         },
@@ -521,7 +521,7 @@
     },
     {
         "intent": "navigate_to_form_listing",
-        "description": "Navigates to the form list screen to view available forms for execution.",
+        "description": "Navigates to the form list screen",
         "parameters": {
             "app_id": "integer"
         },
