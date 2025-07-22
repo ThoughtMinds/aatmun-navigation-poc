@@ -29,8 +29,9 @@ def retrieve(state: State):
         dict: A dictionary containing the retrieved documents in the 'context' key.
     """
     vectorstore = rag.get_vectorstore()
-    retriever = vectorstore.as_retriever()
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 6})
     retrieved_docs = retriever.invoke(input=state["question"])
+    print(f"{retrieved_docs=}")
     return {"context": retrieved_docs}
 
 
