@@ -105,7 +105,7 @@
     },
     {
         "intent": "navigate_to_user_list",
-        "description": "Directs to user list page",
+        "description": "Directs to user list page. This is the listing page",
         "parameters": {
             "app_id": "integer"
         },
@@ -222,7 +222,7 @@
     },
     {
         "intent": "navigate_to_user_edit",
-        "description": "Navigates to the the user edit page",
+        "description": "Navigates to the the user EDIT page. This is NOT login or list page",
         "parameters": {
             "app_id": "integer"
         },
