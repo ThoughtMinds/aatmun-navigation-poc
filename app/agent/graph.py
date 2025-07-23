@@ -29,7 +29,7 @@ def retrieve(state: State):
         dict: A dictionary containing the retrieved documents in the 'context' key.
     """
     vectorstore = rag.get_vectorstore()
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 6})
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
     retrieved_docs = retriever.invoke(input=state["question"])
     print(f"{retrieved_docs=}")
     return {"context": retrieved_docs}
@@ -45,15 +45,20 @@ def generate(state: State):
     Returns:
         dict: A dictionary containing the generated navigation information in the 'navigation' key.
     """
-    context = ""
+    context = {}
     id_mapping = {}
-
+    import json
     for i, doc in enumerate(state["context"], start=1):
         id_mapping[i] = doc.id
-        context += f"{i} - {doc.page_content} | "
+        context[i] = {
+            "id": i,
+            "description": doc.page_content,
+        }
+
+    print("CONTEXT \n\n\n\n\n\n", context ,"\n\n\n\n\n")
     try:
         response = llm.rag_chain.invoke(
-            {"query": state["question"], "context": context}
+            {"query": state["question"], "context": json.dumps(context)}
         )
         if response:
             id = response.id
