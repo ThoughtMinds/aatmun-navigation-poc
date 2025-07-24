@@ -2,6 +2,7 @@ from typing_extensions import List, TypedDict
 from langchain_core.documents import Document
 from app import rag, llm, schema
 from langgraph.graph import START, StateGraph
+import json
 
 
 class State(TypedDict):
@@ -47,7 +48,6 @@ def generate(state: State):
     """
     context = {}
     id_mapping = {}
-    import json
     for i, doc in enumerate(state["context"], start=1):
         id_mapping[i] = doc.id
         context[i] = {
